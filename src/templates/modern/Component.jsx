@@ -1,30 +1,18 @@
 // Modern Professional – clean, contemporary design with blue accent
-export function buildSections(data) {
-  const company = data?.company?.name || "Your Company";
-  const client  = data?.client?.name || "Client Name";
-  const scopeRaw= (data?.project?.scope || "").trim();
-  const itemsRaw= (data?.pricing?.items || "").trim();
-  const total   = data?.pricing?.total || "";
-  const valid   = data?.valid_until || "";
-  const terms   = data?.terms || "";
+import { processProposalData } from '../shared/dataProcessor.js';
 
-  // Split scope into paragraphs → allows AutoPager to flow across pages
-  const scopeParagraphs = scopeRaw
-    ? scopeRaw.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
-
-  // Parse line items: "Title — 500"
-  const items = itemsRaw
-    ? itemsRaw.split(/\r?\n/).map(l => {
-        const [name, ...rest] = l.split(/—|-/);
-        const price = rest.join("-").trim();
-        return { name: (name || "").trim(), price };
-      }).filter(it => it.name)
-    : [];
-
-  const termsParagraphs = terms
-    ? terms.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
+export function buildSections(rawData) {
+  const {
+    company,
+    client,
+    scopeParagraphs,
+    items,
+    total,
+    valid,
+    termsParagraphs,
+    currentDate,
+    proposalId
+  } = processProposalData(rawData);
 
   const sections = [];
 
@@ -45,7 +33,7 @@ export function buildSections(data) {
           <div className="text-xs font-semibold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full print:bg-blue-100 print:text-blue-800">
             Project Proposal
           </div>
-          <div className="text-xs text-gray-500 mt-1 print:text-[10px]">#{Math.random().toString(36).substr(2, 8).toUpperCase()}</div>
+          <div className="text-xs text-gray-500 mt-1 print:text-[10px]">#{proposalId}</div>
         </div>
       </div>
       
@@ -57,7 +45,7 @@ export function buildSections(data) {
           </div>
           <div className="text-right">
             <p className="text-sm font-medium text-gray-700 print:text-xs">Date</p>
-            <p className="text-sm text-gray-900 print:text-xs">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p className="text-sm text-gray-900 print:text-xs">{currentDate}</p>
           </div>
         </div>
       </div>
