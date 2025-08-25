@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Screen preview box */
+:root { --a4-w: 210mm; --a4-h: 297mm; }
+
+#print-container {
+  width: var(--a4-w);
+  min-height: var(--a4-h);
+  margin: 16px auto;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+#print-content { padding: 0; }
+
+/* PRINT (multi-page) */
+@media print {
+  /* Reset and hide UI elements */
+  html, body { height: auto; margin: 0 !important; }
+  body { background: #fff !important; }
+  header, aside, .no-print { display: none !important; }
+
+  /* Hide everything except print content */
+  body * { visibility: hidden !important; }
+  #print-container, #print-container * { visibility: visible !important; }
+
+  /* Position print container */
+  #print-container {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    margin: 0;
+    box-shadow: none;
+    width: auto;
+  }
+
+  /* Page setup */
+  @page { 
+    size: A4; 
+    margin: 12mm;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Content flow */
+  #print-content {
+    width: auto;
+    min-height: 0;
+    height: auto;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  /* Page breaks and empty content */
+  .ppz-page {
+    break-after: page;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .ppz-page:last-child { break-after: avoid; }
+  .ppz-page:empty,
+  .ppz-page:blank,
+  .ppz-page > *:empty { display: none !important; }
+
+  /* Professional watermark */
+  .ppz-watermark {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: rotate(-45deg) !important;
+    opacity: 0.08 !important;
+    font-size: 36px !important;
+    font-weight: 300 !important;
+    color: #e0e0e0 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    letter-spacing: 4px !important;
+    font-family: Arial, sans-serif !important;
+  }
+
+  /* Preserve colors and breaks */
+  * { 
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .avoid-break { break-inside: avoid; }
+  .page-break { break-before: page; }
+
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+
+/* Optional helpers for non-paged templates (still useful) */
+.avoid-break { break-inside: avoid; }
+.page-break  { break-before: page; }
+
+/* Custom scrollbar styling */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #0c0e12;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #2a2f39;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background: #3a3f49;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #4a4f59;
+}
+
+/* Firefox scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2f39 #0c0e12;
+}
+
+
