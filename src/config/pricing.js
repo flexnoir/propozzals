@@ -14,7 +14,7 @@ export const fetchConfig = async (forceRefresh = false) => {
     // Fallback to environment variable or default
     return {
       pricing: {
-        amountCents: parseInt(import.meta.env.VITE_PAYMENT_AMOUNT || '600', 10),
+        amountCents: parseInt(import.meta.env.VITE_PAYMENT_AMOUNT || '499', 10),
         currency: 'EUR'
       }
     };
@@ -23,7 +23,7 @@ export const fetchConfig = async (forceRefresh = false) => {
 
 export const PRICING = {
   // Default values (will be updated by fetchConfig)
-  AMOUNT_CENTS: 600,
+  AMOUNT_CENTS: 499,
   
   // Price in euros (for display)
   get AMOUNT_EUROS() {
