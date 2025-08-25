@@ -1,28 +1,18 @@
 // Elegant Luxury – sophisticated design with refined color palette and premium aesthetics
-export function buildSections(data) {
-  const company = data?.company?.name || "Your Company";
-  const client  = data?.client?.name || "Client Name";
-  const scopeRaw= (data?.project?.scope || "").trim();
-  const itemsRaw= (data?.pricing?.items || "").trim();
-  const total   = data?.pricing?.total || "";
-  const valid   = data?.valid_until || "";
-  const terms   = data?.terms || "";
+import { processProposalData } from '../shared/dataProcessor.js';
 
-  const scopeParagraphs = scopeRaw
-    ? scopeRaw.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
-
-  const items = itemsRaw
-    ? itemsRaw.split(/\r?\n/).map(l => {
-        const [name, ...rest] = l.split(/—|-/);
-        const price = rest.join("-").trim();
-        return { name: (name || "").trim(), price };
-      }).filter(it => it.name)
-    : [];
-
-  const termsParagraphs = terms
-    ? terms.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
+export function buildSections(rawData) {
+  const {
+    company,
+    client,
+    scopeParagraphs,
+    items,
+    total,
+    valid,
+    termsParagraphs,
+    currentDate,
+    proposalId
+  } = processProposalData(rawData);
 
   const sections = [];
 
@@ -59,7 +49,7 @@ export function buildSections(data) {
             </div>
             <div className="bg-white rounded-lg p-3 border border-stone-200 shadow-sm print:bg-white print:border-stone-300 print:p-2 print:shadow-none">
               <p className="text-xs font-semibold text-stone-600 uppercase tracking-wide mb-1 print:text-[10px]">Date</p>
-              <p className="text-sm text-stone-900 print:text-xs">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <p className="text-sm text-stone-900 print:text-xs">{currentDate}</p>
             </div>
           </div>
         </div>

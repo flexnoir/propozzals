@@ -1,28 +1,18 @@
 // Ultra Minimal – Pure minimalism with maximum white space and subtle typography
-export function buildSections(data) {
-  const company = data?.company?.name || "Your Company";
-  const client  = data?.client?.name || "Client Name";
-  const scopeRaw= (data?.project?.scope || "").trim();
-  const itemsRaw= (data?.pricing?.items || "").trim();
-  const total   = data?.pricing?.total || "";
-  const valid   = data?.valid_until || "";
-  const terms   = data?.terms || "";
+import { processProposalData } from '../shared/dataProcessor.js';
 
-  const scopeParagraphs = scopeRaw
-    ? scopeRaw.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
-
-  const items = itemsRaw
-    ? itemsRaw.split(/\r?\n/).map(l => {
-        const [name, ...rest] = l.split(/—|-/);
-        const price = rest.join("-").trim();
-        return { name: (name || "").trim(), price };
-      }).filter(it => it.name)
-    : [];
-
-  const termsParagraphs = terms
-    ? terms.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
+export function buildSections(rawData) {
+  const {
+    company,
+    client,
+    scopeParagraphs,
+    items,
+    total,
+    valid,
+    termsParagraphs,
+    currentDate,
+    proposalId
+  } = processProposalData(rawData);
 
   const sections = [];
 
@@ -46,7 +36,7 @@ export function buildSections(data) {
             </div>
             <div>
               <div className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2 print:text-[10px]">Date</div>
-              <div className="text-sm text-gray-600 print:text-xs">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+              <div className="text-sm text-gray-600 print:text-xs">{currentDate}</div>
             </div>
           </div>
         </div>

@@ -1,28 +1,18 @@
 // Corporate Professional – structured business template with teal/green color scheme
-export function buildSections(data) {
-  const company = data?.company?.name || "Your Company";
-  const client  = data?.client?.name || "Client Name";
-  const scopeRaw= (data?.project?.scope || "").trim();
-  const itemsRaw= (data?.pricing?.items || "").trim();
-  const total   = data?.pricing?.total || "";
-  const valid   = data?.valid_until || "";
-  const terms   = data?.terms || "";
+import { processProposalData } from '../shared/dataProcessor.js';
 
-  const scopeParagraphs = scopeRaw
-    ? scopeRaw.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
-
-  const items = itemsRaw
-    ? itemsRaw.split(/\r?\n/).map(l => {
-        const [name, ...rest] = l.split(/—|-/);
-        const price = rest.join("-").trim();
-        return { name: (name || "").trim(), price };
-      }).filter(it => it.name)
-    : [];
-
-  const termsParagraphs = terms
-    ? terms.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
-    : [];
+export function buildSections(rawData) {
+  const {
+    company,
+    client,
+    scopeParagraphs,
+    items,
+    total,
+    valid,
+    termsParagraphs,
+    currentDate,
+    proposalId
+  } = processProposalData(rawData);
 
   const sections = [];
 
@@ -44,7 +34,7 @@ export function buildSections(data) {
             <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 print:px-3 print:py-1">
               <span className="text-sm font-semibold print:text-xs">BUSINESS PROPOSAL</span>
             </div>
-            <p className="text-teal-100 text-xs mt-2 print:text-[10px] print:mt-1">#{Math.random().toString(36).substr(2, 8).toUpperCase()}</p>
+            <p className="text-teal-100 text-xs mt-2 print:text-[10px] print:mt-1">#{proposalId}</p>
           </div>
         </div>
       </div>
@@ -63,7 +53,7 @@ export function buildSections(data) {
               <div className="h-2 w-2 bg-teal-600 rounded-full print:h-1.5 print:w-1.5"></div>
               <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide print:text-[10px]">Date</p>
             </div>
-            <p className="text-sm font-semibold text-gray-900 print:text-xs">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+            <p className="text-sm font-semibold text-gray-900 print:text-xs">{currentDate}</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 print:bg-gray-100 print:p-3">
             <div className="flex items-center gap-2 mb-2 print:mb-1">
