@@ -18,7 +18,7 @@ const getStripePromise = async () => {
 const stripePromise = getStripePromise();
 
 // Payment Form Component
-function PaymentForm({ amount, onSuccess, onError, onCancel }) {
+function PaymentForm({ amount, onSuccess, onError, onCancel, onEmailChange }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -55,15 +55,15 @@ function PaymentForm({ amount, onSuccess, onError, onCancel }) {
     setEmailError('');
 
     try {
-      // Confirm payment with PaymentElement and custom email
+      // Confirm payment with PaymentElement and include email in billing details
       const { error: paymentError, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/success`,
           payment_method_data: {
             billing_details: {
-              email: email.trim(),
-              phone: '' // Required since we set phone: 'never' in PaymentElement
+              email: email,
+              phone: null
             }
           }
         },
@@ -106,6 +106,7 @@ function PaymentForm({ amount, onSuccess, onError, onCancel }) {
             onChange={(e) => {
               setEmail(e.target.value);
               if (emailError) setEmailError('');
+              onEmailChange?.(e.target.value);
             }}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               emailError ? 'border-red-300' : 'border-gray-300'
@@ -187,6 +188,7 @@ function PaymentForm({ amount, onSuccess, onError, onCancel }) {
 function PaymentModal({ isOpen, onClose, amount = 490, onSuccess, onError }) {
   const [clientSecret, setClientSecret] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [customerEmail, setCustomerEmail] = useState('');
 
   // Create payment intent when modal opens
   useEffect(() => {
@@ -195,7 +197,7 @@ function PaymentModal({ isOpen, onClose, amount = 490, onSuccess, onError }) {
     }
   }, [isOpen, clientSecret]);
 
-  const createPaymentIntent = async () => {
+  const createPaymentIntent = async (email = null) => {
     setIsLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/payment/create-payment-intent`, {
@@ -205,7 +207,8 @@ function PaymentModal({ isOpen, onClose, amount = 490, onSuccess, onError }) {
         },
         body: JSON.stringify({
           templateId: 'proposal-modern-01',
-          formData: {}
+          formData: {},
+          customerEmail: email
         }),
       });
 
@@ -270,6 +273,11 @@ function PaymentModal({ isOpen, onClose, amount = 490, onSuccess, onError }) {
               onSuccess={onSuccess}
               onError={onError}
               onCancel={onClose}
+              onEmailChange={(email) => {
+                setCustomerEmail(email);
+                // Email is stored for use during payment submission
+                // No auto-recreation of payment intent during typing
+              }}
             />
           </Elements>
         ) : (

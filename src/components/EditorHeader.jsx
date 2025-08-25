@@ -73,38 +73,41 @@ export default function EditorHeader({
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2">
-          <div className="flex items-center space-x-2 text-xs">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="hidden sm:flex items-center space-x-2 text-xs">
             <SaveStatusIndicator saveStatus={saveStatus} />
           </div>
           
           <button
             type="button"
             onClick={onPreview}
-            className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]"
+            className="px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]"
           >
-            Preview
+            <span className="hidden sm:inline">Preview</span>
+            <span className="sm:hidden">👁</span>
           </button>
           
           <button
             type="button"
             onClick={onDownloadPDF}
             disabled={isGeneratingPDF}
-            className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all ${
+            className={`px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all ${
               isGeneratingPDF 
                 ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75' 
                 : 'border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]'
             }`}
           >
             {isGeneratingPDF ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <div className="w-3 h-3 border border-[#58e1ff] border-t-transparent rounded-full animate-spin"></div>
                 <span className="hidden md:inline">Generating...</span>
-                <span className="md:hidden">PDF...</span>
+                <span className="md:hidden sm:inline">PDF...</span>
+                <span className="sm:hidden">⏳</span>
               </div>
             ) : (
               <>
-                <span className="hidden md:inline">Download </span>PDF
+                <span className="hidden sm:inline"><span className="hidden md:inline">Download </span>PDF</span>
+                <span className="sm:hidden">📄</span>
               </>
             )}
           </button>
@@ -113,21 +116,23 @@ export default function EditorHeader({
             type="button"
             onClick={onShowPayment}
             disabled={isGeneratingPDF}
-            className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
               isGeneratingPDF 
                 ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
                 : 'bg-[#58e1ff] text-[#0b0f14] hover:opacity-90'
             }`}
           >
             {isGeneratingPDF ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <div className="w-3 h-3 border border-[#0b0f14] border-t-transparent rounded-full animate-spin"></div>
                 <span className="hidden md:inline">Processing...</span>
-                <span className="md:hidden">PDF...</span>
+                <span className="md:hidden sm:inline">PDF...</span>
+                <span className="sm:hidden">⏳</span>
               </div>
             ) : (
               <>
-                <span className="hidden lg:inline">Get Clean </span>PDF — {currentPrice}
+                <span className="hidden sm:inline"><span className="hidden lg:inline">Get Clean </span>PDF — {currentPrice}</span>
+                <span className="sm:hidden">✨{currentPrice}</span>
               </>
             )}
           </button>

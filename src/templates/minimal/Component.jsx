@@ -6,6 +6,7 @@ export function buildSections(data) {
   const itemsRaw= (data?.pricing?.items || "").trim();
   const total   = data?.pricing?.total || "";
   const valid   = data?.valid_until || "";
+  const termsRaw= (data?.terms || "").trim();
 
   const scopeParagraphs = scopeRaw
     ? scopeRaw.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
@@ -17,6 +18,10 @@ export function buildSections(data) {
         const price = rest.join("-").trim();
         return { name: (name || "").trim(), price };
       }).filter(it => it.name)
+    : [];
+
+  const termsParagraphs = termsRaw
+    ? termsRaw.split(/\n{2,}/).map(s => s.trim()).filter(Boolean)
     : [];
 
   const sections = [];
@@ -138,38 +143,50 @@ export function buildSections(data) {
         <div className="h-px w-12 bg-gray-900 print:w-8"></div>
       </div>
       
-      <div className="bg-gray-50 rounded-lg p-6 print:bg-gray-100 print:p-4">
-        <div className="grid grid-cols-2 gap-8 print:grid-cols-2 print:gap-6 text-sm print:text-xs">
-          <div className="space-y-4 print:space-y-3">
-            <div>
-              <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Payment Structure</h3>
-              <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
-                50% retainer required upon agreement. Remaining balance due upon project completion and final delivery.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Timeline</h3>
-              <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
-                Project duration: 3–4 weeks from commencement. Expedited delivery available at premium rates.
-              </p>
-            </div>
+      {termsParagraphs.length ? (
+        <div className="bg-gray-50 rounded-lg p-6 print:bg-gray-100 print:p-4">
+          <div className="grid grid-cols-2 gap-8 print:grid-cols-2 print:gap-6 text-sm print:text-xs">
+            {termsParagraphs.map((p, i) => (
+              <div key={i} className="mb-4 print:mb-3">
+                <p className="text-gray-700 leading-relaxed font-light print:leading-tight whitespace-pre-wrap">{p}</p>
+              </div>
+            ))}
           </div>
-          <div className="space-y-4 print:space-y-3">
-            <div>
-              <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Revisions</h3>
-              <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
-                Two rounds of revisions included in scope. Additional iterations billed at standard consulting rates.
-              </p>
+        </div>
+      ) : (
+        <div className="bg-gray-50 rounded-lg p-6 print:bg-gray-100 print:p-4">
+          <div className="grid grid-cols-2 gap-8 print:grid-cols-2 print:gap-6 text-sm print:text-xs">
+            <div className="space-y-4 print:space-y-3">
+              <div>
+                <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Payment Structure</h3>
+                <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
+                  50% retainer required upon agreement. Remaining balance due upon project completion and final delivery.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Timeline</h3>
+                <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
+                  Project duration: 3–4 weeks from commencement. Expedited delivery available at premium rates.
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Deliverables</h3>
-              <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
-                Complete project files and documentation provided. Client responsible for content and asset provision.
-              </p>
+            <div className="space-y-4 print:space-y-3">
+              <div>
+                <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Revisions</h3>
+                <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
+                  Two rounds of revisions included in scope. Additional iterations billed at standard consulting rates.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900 mb-2 uppercase tracking-wide text-xs print:text-[10px]">Deliverables</h3>
+                <p className="text-gray-700 leading-relaxed font-light print:leading-tight">
+                  Complete project files and documentation provided. Client responsible for content and asset provision.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 

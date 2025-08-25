@@ -66,6 +66,10 @@ export default function Editor() {
     }
   };
 
+  const handleShowPayment = () => {
+    setShowPaymentModal(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#0f1115] text-[#e9ecf1]">
       <EditorHeader
@@ -105,6 +109,7 @@ export default function Editor() {
         data={data}
         schema={schema}
         onDownloadPDF={handleDownloadPDF}
+        onShowPayment={handleShowPayment}
         isGeneratingPDF={isGeneratingPDF}
       />
 

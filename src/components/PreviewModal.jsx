@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TEMPLATES } from "../lib/templates";
+import { PRICING, fetchConfig } from "../config/pricing.js";
 import AutoPager from "./AutoPager.new.jsx";
 
 export default function PreviewModal({ 
@@ -10,10 +11,22 @@ export default function PreviewModal({
   data, 
   schema,
   onDownloadPDF,
+  onShowPayment,
   isGeneratingPDF 
 }) {
   const navigate = useNavigate();
   const [previewTemplateId, setPreviewTemplateId] = useState(templateId);
+  const [currentPrice, setCurrentPrice] = useState(PRICING.FORMATTED_PRICE);
+
+  // Load configuration on mount
+  useEffect(() => {
+    const loadConfig = async () => {
+      const config = await fetchConfig();
+      PRICING.update(config);
+      setCurrentPrice(PRICING.FORMATTED_PRICE);
+    };
+    loadConfig();
+  }, []);
 
   // Update preview template when main template changes
   useEffect(() => {
@@ -75,7 +88,7 @@ export default function PreviewModal({
         {/* Preview Content */}
         <div className="flex-1 p-4 overflow-hidden">
           <div className="bg-gray-100 rounded-lg flex justify-center h-full overflow-auto">
-            <div className="bg-white shadow-lg my-4" style={{ width: '794px', minHeight: '1123px' }}>
+            <div className="bg-white shadow-lg my-4 w-full max-w-[794px] mx-auto" style={{ minHeight: '1123px' }}>
               <AutoPager
                 sections={TEMPLATES[previewTemplateId]?.buildSections(data || schema.defaultData) || []}
                 watermark={true}
@@ -87,43 +100,69 @@ export default function PreviewModal({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 border-t border-[#1a1f27] bg-[#11141a] flex justify-between items-center">
-          <div className="text-sm text-[#8b94a3]">
-            Current template: {TEMPLATES[previewTemplateId]?.title || 'Unknown'}
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => onClose()}
-              className="px-4 py-2 rounded-md border border-[#2a2f39] text-sm hover:border-[#58e1ff] hover:text-[#58e1ff] transition-colors"
-            >
-              Cancel
-            </button>
-            {previewTemplateId !== templateId && (
+        <div className="p-4 border-t border-[#1a1f27] bg-[#11141a]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div className="text-sm text-[#8b94a3]">
+              Current template: {TEMPLATES[previewTemplateId]?.title || 'Unknown'}
+            </div>
+            <div className="flex flex-wrap gap-2">
               <button
-                onClick={handleClosePreview}
-                className="px-4 py-2 rounded-md bg-[#58e1ff] text-[#0b0f14] text-sm font-semibold hover:opacity-90 transition-opacity"
+                onClick={() => onClose()}
+                className="px-3 sm:px-4 py-2 rounded-md border border-[#2a2f39] text-sm hover:border-[#58e1ff] hover:text-[#58e1ff] transition-colors"
               >
-                Apply Template
+                Cancel
               </button>
-            )}
-            <button
-              onClick={onDownloadPDF}
-              disabled={isGeneratingPDF}
-              className={`px-4 py-2 rounded-md text-sm font-semibold transition-all ${
-                isGeneratingPDF 
-                  ? 'bg-[#58e1ff] text-[#0b0f14] cursor-not-allowed opacity-75' 
-                  : 'bg-[#2a2f39] text-white hover:bg-[#3a3f49]'
-              }`}
-            >
-              {isGeneratingPDF ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-[#0b0f14] border-t-transparent rounded-full animate-spin"></div>
-                  <span>Generating PDF...</span>
-                </div>
-              ) : (
-                'Download PDF'
+              {previewTemplateId !== templateId && (
+                <button
+                  onClick={handleClosePreview}
+                  className="px-3 sm:px-4 py-2 rounded-md bg-[#58e1ff] text-[#0b0f14] text-sm font-semibold hover:opacity-90 transition-opacity"
+                >
+                  Apply Template
+                </button>
               )}
-            </button>
+              <button
+                onClick={onDownloadPDF}
+                disabled={isGeneratingPDF}
+                className={`px-3 sm:px-4 py-2 rounded-md text-sm transition-all border ${
+                  isGeneratingPDF 
+                    ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75' 
+                    : 'border-[#2a2f39] text-white hover:border-[#58e1ff] hover:text-[#58e1ff]'
+                }`}
+              >
+                {isGeneratingPDF ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-[#58e1ff] border-t-transparent rounded-full animate-spin"></div>
+                    <span className="hidden sm:inline">Generating...</span>
+                    <span className="sm:hidden">PDF...</span>
+                  </div>
+                ) : (
+                  <>
+                    <span className="hidden sm:inline">Download </span>PDF
+                  </>
+                )}
+              </button>
+              <button
+                onClick={onShowPayment}
+                disabled={isGeneratingPDF}
+                className={`px-3 sm:px-4 py-2 rounded-md text-sm font-semibold transition-all ${
+                  isGeneratingPDF 
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                    : 'bg-[#58e1ff] text-[#0b0f14] hover:opacity-90'
+                }`}
+              >
+                {isGeneratingPDF ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-[#0b0f14] border-t-transparent rounded-full animate-spin"></div>
+                    <span className="hidden sm:inline">Processing...</span>
+                    <span className="sm:hidden">PDF...</span>
+                  </div>
+                ) : (
+                  <>
+                    <span className="hidden lg:inline">Get Clean </span>PDF — {currentPrice}
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>

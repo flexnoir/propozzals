@@ -94,6 +94,14 @@
 .avoid-break { break-inside: avoid; }
 .page-break  { break-before: page; }
 
+/* Responsive .ppz-page styling */
+@media (max-width: 850px) {
+  .ppz-page {
+    width: 100% !important;
+    max-width: 794px !important;
+  }
+}
+
 /* Custom scrollbar styling */
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
