@@ -5,13 +5,13 @@ export function buildSections(rawData) {
   const {
     company,
     client,
+    tagline,
     scopeParagraphs,
     items,
     total,
     valid,
     termsParagraphs,
-    currentDate,
-    proposalId
+    currentDate
   } = processProposalData(rawData);
 
   const sections = [];
@@ -23,11 +23,13 @@ export function buildSections(rawData) {
         <div className="flex items-baseline justify-between mb-6 print:mb-4">
           <div>
             <h1 className="text-3xl font-light text-gray-900 tracking-wide print:text-2xl">{company}</h1>
+            {tagline && (
+              <p className="text-sm text-gray-600 mt-1 print:text-xs">{tagline}</p>
+            )}
             <div className="h-px w-16 bg-gray-900 mt-2 print:w-12"></div>
           </div>
           <div className="text-right">
             <div className="text-xs font-medium uppercase tracking-[0.2em] text-gray-600 print:text-[10px]">Executive Proposal</div>
-            <div className="text-xs text-gray-500 mt-1 print:text-[10px]">#{proposalId}</div>
           </div>
         </div>
         

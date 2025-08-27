@@ -1,6 +1,7 @@
 export function processProposalData(data) {
   const company = data?.company?.name || "Your Company";
   const client = data?.client?.name || "Client Name";
+  const tagline = (data?.company?.tagline || "").trim();
   const scopeRaw = (data?.project?.scope || "").trim();
   const itemsRaw = (data?.pricing?.items || "").trim();
   const total = data?.pricing?.total || "";
@@ -26,6 +27,7 @@ export function processProposalData(data) {
   return {
     company,
     client,
+    tagline,
     scopeParagraphs,
     items,
     total,

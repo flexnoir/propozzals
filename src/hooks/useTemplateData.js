@@ -30,26 +30,37 @@ export const useTemplateData = () => {
     }
   }, [paramId, navigate]);
 
-  // Load draft if exists OR merge with current values
+  // Load shared proposal data (works across all templates)
   useEffect(() => {
-    const currentValues = getValues();
-    const saved = localStorage.getItem(`ppz:${templateId}`);
-    let base = schema.defaultData;
-
+    const saved = localStorage.getItem('ppz:proposal-data');
+    
     if (saved) {
-      base = JSON.parse(saved);
+      // Use saved data if it exists
+      try {
+        const savedData = JSON.parse(saved);
+        reset(savedData);
+      } catch (error) {
+        console.error('Failed to parse saved data:', error);
+        // Fall back to default data if saved data is corrupted
+        reset(schema.defaultData);
+      }
+    } else {
+      // Use default data if no saved data exists
+      reset(schema.defaultData);
     }
-
-    // Merge: keep current values if they exist, otherwise fall back to defaults/saved
-    const merged = { ...base, ...currentValues };
-    reset(merged);
-  }, [templateId, reset, schema.defaultData, getValues]);
+  }, [templateId, reset, schema.defaultData]);
 
   // Update document hash
   useEffect(() => {
     if (!data) return;
     documentHash({ templateId, data }).then(setHash);
   }, [templateId, data]);
+
+  // Clear all data function
+  const clearAllData = () => {
+    localStorage.removeItem('ppz:proposal-data');
+    reset(schema.defaultData);
+  };
 
   return {
     templateId,
@@ -61,6 +72,8 @@ export const useTemplateData = () => {
     control,
     getValues,
     watch,
-    errors
+    errors,
+    reset,
+    clearAllData
   };
 };

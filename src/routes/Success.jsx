@@ -61,7 +61,7 @@ export default function Success() {
   // Handle redirects
   useEffect(() => {
     if (shouldRedirect) {
-      window.location.href = '/';
+      window.location.href = '/editor';
     }
   }, [shouldRedirect]);
   
@@ -136,9 +136,16 @@ export default function Success() {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Payment Successful!
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4">
             Thank you for your purchase. Your clean PDF has been downloaded automatically.
           </p>
+          
+          {/* Social Proof */}
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 mb-6">
+            <p className="text-blue-800 text-sm font-medium">
+              💡 Join 1,000+ professionals creating better proposals with Propozzals
+            </p>
+          </div>
 
           {/* Payment Details */}
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
@@ -167,26 +174,39 @@ export default function Success() {
             </p>
           </div>
 
+          {/* Bookmark Suggestion */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-center mb-2">
+              <svg className="w-5 h-5 text-amber-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+              <span className="text-amber-800 font-medium">⚡ Need more proposals?</span>
+            </div>
+            <p className="text-amber-700 text-sm">
+              Bookmark this page (Ctrl+D) for instant access to create professional proposals anytime.
+            </p>
+          </div>
+
           {/* Action Buttons */}
           <div className="space-y-3">
             <Link
-              to="/"
+              to="/editor"
               className="w-full bg-[#58e1ff] text-[#0b0f14] font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity block"
             >
               Create Another Proposal
             </Link>
             
-            <button
-              onClick={() => window.history.back()}
-              className="w-full bg-gray-100 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors"
+            <Link
+              to="/"
+              className="w-full bg-gray-100 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors block"
             >
-              Back to Editor
-            </button>
+              Back to Home
+            </Link>
           </div>
 
           {/* Auto-redirect notice */}
           <div className="mt-6 text-xs text-gray-500">
-            Redirecting to home page in {countdown} seconds...
+            Redirecting to editor in {countdown} seconds...
           </div>
         </div>
 

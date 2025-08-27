@@ -43,6 +43,7 @@ export default function EditorHeader({
   onPreview, 
   onDownloadPDF, 
   onShowPayment,
+  onClearAll,
   isGeneratingPDF 
 }) {
   const [currentPrice, setCurrentPrice] = useState(PRICING.FORMATTED_PRICE);
@@ -77,6 +78,16 @@ export default function EditorHeader({
           <div className="hidden sm:flex items-center space-x-2 text-xs">
             <SaveStatusIndicator saveStatus={saveStatus} />
           </div>
+          
+          <button
+            type="button"
+            onClick={onClearAll}
+            className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-md border text-xs transition-all border-[#2a2f39] hover:border-red-500 hover:text-red-400"
+            title="Clear all fields"
+          >
+            <span className="hidden sm:inline">Clear All</span>
+            <span className="sm:hidden">🗑</span>
+          </button>
           
           <button
             type="button"

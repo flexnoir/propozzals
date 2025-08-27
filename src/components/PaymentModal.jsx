@@ -108,7 +108,7 @@ function PaymentForm({ amount, onSuccess, onError, onCancel, onEmailChange }) {
               if (emailError) setEmailError('');
               onEmailChange?.(e.target.value);
             }}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white ${
               emailError ? 'border-red-300' : 'border-gray-300'
             }`}
             placeholder="Enter your email address"
@@ -232,8 +232,8 @@ function PaymentModal({ isOpen, onClose, amount = 490, onSuccess, onError }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-gray-900">
             Secure Payment

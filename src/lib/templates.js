@@ -4,6 +4,7 @@ import * as Elegant from "../templates/elegant/Component.jsx";
 import * as Corporate from "../templates/corporate/Component.jsx";
 import * as UltraMinimal from "../templates/ultra-minimal/Component.jsx";
 import * as Luxury from "../templates/luxury/Component.jsx";
+import * as WebAgency from "../templates/web-agency/Component.jsx";
 
 import modernSchema from "../templates/modern/schema.js"; // reuse same schema for all templates
 
@@ -14,6 +15,7 @@ export const TEMPLATES = {
   "proposal-corporate-01": { title: "Corporate Business",   schema: modernSchema, buildSections: Corporate.buildSections },
   "proposal-ultramin-01":  { title: "Ultra Minimal",       schema: modernSchema, buildSections: UltraMinimal.buildSections },
   "proposal-luxury-01":    { title: "Luxury Premium",      schema: modernSchema, buildSections: Luxury.buildSections },
+  "proposal-webagency-01": { title: "Web Agency Pro",      schema: modernSchema, buildSections: WebAgency.buildSections },
 
 };
 
