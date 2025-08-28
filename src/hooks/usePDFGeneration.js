@@ -55,8 +55,11 @@ export const usePDFGeneration = () => {
       
       setShowPaymentModal(false);
       
-      const successUrl = `/success?payment_intent=${paymentIntent.id}&amount=${(paymentIntent.amount / 100).toFixed(2)}`;
-      window.location.href = successUrl;
+      // Delay redirect to allow PDF download to complete
+      setTimeout(() => {
+        const successUrl = `/success?payment_intent=${paymentIntent.id}&amount=${(paymentIntent.amount / 100).toFixed(2)}`;
+        window.location.href = successUrl;
+      }, 2000); // 2 second delay
       
     } catch (error) {
       console.error('Error generating clean PDF:', error);
