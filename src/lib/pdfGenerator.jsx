@@ -198,15 +198,29 @@ export class PDFGenerator {
       // iOS Safari doesn't handle blob downloads well - use data URL instead
       const reader = new FileReader();
       reader.onload = function() {
-        const dataUrl = reader.result;
-        const a = document.createElement('a');
-        a.href = dataUrl;
-        a.download = filename;
-        a.target = '_blank';
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        try {
+          const dataUrl = reader.result;
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = filename;
+          a.target = '_blank';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } catch (error) {
+          console.error('iOS download failed:', error);
+          // Fallback to blob URL for iOS if data URL fails
+          const url = window.URL.createObjectURL(pdfBlob);
+          window.open(url, '_blank');
+          setTimeout(() => window.URL.revokeObjectURL(url), 10000);
+        }
+      };
+      reader.onerror = function() {
+        console.error('FileReader failed, using blob URL fallback');
+        const url = window.URL.createObjectURL(pdfBlob);
+        window.open(url, '_blank');
+        setTimeout(() => window.URL.revokeObjectURL(url), 10000);
       };
       reader.readAsDataURL(pdfBlob);
     } else {
