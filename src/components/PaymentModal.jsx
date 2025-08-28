@@ -270,7 +270,10 @@ function PaymentModal({ isOpen, onClose, amount = 490, onSuccess, onError }) {
           <Elements stripe={stripePromise} options={{ clientSecret }}>
             <PaymentForm
               amount={amount}
-              onSuccess={onSuccess}
+              onSuccess={(paymentIntent) => {
+                // Pass both paymentIntent and customerEmail to the parent
+                onSuccess(paymentIntent, customerEmail);
+              }}
               onError={onError}
               onCancel={onClose}
               onEmailChange={(email) => {

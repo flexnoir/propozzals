@@ -5,6 +5,7 @@ import { PDFGenerator } from '../lib/pdfGenerator.jsx';
 export const usePDFGeneration = () => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   const generatePDF = async (templateId, data, schema, options = {}) => {
     try {
@@ -46,18 +47,87 @@ export const usePDFGeneration = () => {
     await generatePDF(templateId, data, schema, { addWatermark: true });
   };
 
-  const handlePaymentSuccess = async (paymentIntent, templateId, data, schema) => {
+  // Send PDF via email after successful payment
+  const sendPDFEmail = async (paymentIntent, templateId, data, schema, customerEmail) => {
     try {
+      setIsSendingEmail(true);
+
+      const currentTemplate = TEMPLATES[templateId];
+      const { buildSections } = currentTemplate;
+      
+      const sections = buildSections(data || schema.defaultData);
+      const htmlContent = PDFGenerator.generateHTML(sections);
+
+      // Prepare template data for email
+      const templateData = {
+        customerName: data?.client?.name || data?.company?.name || 'Valued Customer',
+        company: data?.company || {},
+        client: data?.client || {},
+        project: data?.project || {}
+      };
+
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/email/send-pdf`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          html: htmlContent,
+          to: customerEmail,
+          paymentIntentId: paymentIntent.id,
+          templateData: templateData
+        })
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to send email');
+      }
+
+      console.log('PDF email sent successfully:', result.messageId);
+      return result;
+
+    } catch (error) {
+      console.error('Error sending PDF email:', error);
+      // Don't throw error - email is a nice-to-have, not critical
+      // User still gets their download
+      return { success: false, error: error.message };
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  const handlePaymentSuccess = async (paymentIntent, templateId, data, schema, customerEmail) => {
+    try {
+      // Step 1: Generate and download PDF
       await generatePDF(templateId, data, schema, { 
         addWatermark: false, 
         filename: 'proposal-clean.pdf' 
       });
       
+      // Step 2: Send PDF via email (parallel, don't wait)
+      if (customerEmail) {
+        console.log('Sending PDF to email:', customerEmail);
+        // Send email in background - don't wait for it
+        sendPDFEmail(paymentIntent, templateId, data, schema, customerEmail)
+          .then(result => {
+            if (result.success) {
+              console.log('✅ PDF email sent successfully!');
+            } else {
+              console.warn('⚠️ PDF email failed:', result.error);
+            }
+          })
+          .catch(err => {
+            console.error('❌ PDF email error:', err);
+          });
+      }
+      
       setShowPaymentModal(false);
       
-      // Delay redirect to allow PDF download to complete
+      // Step 3: Redirect to success page with email info
       setTimeout(() => {
-        const successUrl = `/success?payment_intent=${paymentIntent.id}&amount=${(paymentIntent.amount / 100).toFixed(2)}`;
+        const successUrl = `/success?payment_intent=${paymentIntent.id}&amount=${(paymentIntent.amount / 100).toFixed(2)}&email=${encodeURIComponent(customerEmail || '')}`;
         window.location.href = successUrl;
       }, 2000); // 2 second delay
       
@@ -78,9 +148,11 @@ export const usePDFGeneration = () => {
 
   return {
     isGeneratingPDF,
+    isSendingEmail,
     showPaymentModal,
     setShowPaymentModal,
     downloadPDF,
+    sendPDFEmail,
     handlePaymentSuccess,
     handlePaymentError,
     handlePaymentCancel

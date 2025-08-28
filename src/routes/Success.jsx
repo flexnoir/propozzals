@@ -13,6 +13,7 @@ export default function Success() {
   // Get payment details from URL params
   const paymentId = params.get('payment_intent');
   const amount = params.get('amount');
+  const customerEmail = params.get('email');
   
   // Load configuration on mount
   useEffect(() => {
@@ -137,7 +138,7 @@ export default function Success() {
             Payment Successful!
           </h1>
           <p className="text-gray-600 mb-4">
-            Thank you for your purchase. Your clean PDF has been downloaded automatically.
+            Thank you for your purchase. Your clean PDF has been downloaded automatically{customerEmail ? ' and emailed to you' : ''}.
           </p>
           
           {/* Social Proof */}
@@ -173,6 +174,24 @@ export default function Success() {
               Your clean PDF export is ready for use. No watermarks, professional quality.
             </p>
           </div>
+
+          {/* Email Confirmation */}
+          {customerEmail && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+              <div className="flex items-center justify-center mb-2">
+                <svg className="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span className="text-green-800 font-medium">Email Sent</span>
+              </div>
+              <p className="text-green-700 text-sm">
+                A backup copy has been sent to <span className="font-mono text-xs bg-green-100 px-1 rounded">{customerEmail}</span>
+              </p>
+              <p className="text-green-600 text-xs mt-1">
+                Check your inbox (and spam folder) for your PDF attachment.
+              </p>
+            </div>
+          )}
 
           {/* Bookmark Suggestion */}
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">

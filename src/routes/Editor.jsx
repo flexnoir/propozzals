@@ -51,9 +51,9 @@ export default function Editor() {
     }
   };
 
-  const handlePaymentSuccessWrapper = async (paymentIntent) => {
+  const handlePaymentSuccessWrapper = async (paymentIntent, customerEmail) => {
     try {
-      await handlePaymentSuccess(paymentIntent, templateId, data, schema);
+      await handlePaymentSuccess(paymentIntent, templateId, data, schema, customerEmail);
     } catch (error) {
       alert(error.message);
     }
