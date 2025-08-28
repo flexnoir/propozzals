@@ -192,27 +192,18 @@ export class PDFGenerator {
     const pdfBlob = await response.blob();
     
     const url = window.URL.createObjectURL(pdfBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.style.display = 'none';
     
-    // Check if we're on mobile
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // Add mobile-specific attributes to ensure download
+    a.setAttribute('download', filename);
+    a.setAttribute('target', '_self');
     
-    if (isMobile) {
-      // Mobile: open in new tab and delay cleanup
-      window.open(url, '_blank');
-      // Don't revoke immediately - let it persist for 10 minutes
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-      }, 10 * 60 * 1000);
-    } else {
-      // Desktop: standard download
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 }
