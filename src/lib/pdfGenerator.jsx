@@ -195,6 +195,9 @@ export class PDFGenerator {
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
+    a.target = '_self';
+    a.type = 'application/pdf';
+    a.style.display = 'none';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
