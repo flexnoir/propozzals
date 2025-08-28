@@ -178,6 +178,7 @@ export class PDFGenerator {
       body: JSON.stringify({
         html: htmlContent,
         templateId: options.templateId,
+        filename: filename, // Send filename to backend
         options: {
           addWatermark: options.addWatermark ?? true
         }
@@ -189,21 +190,34 @@ export class PDFGenerator {
       throw new Error(errorData.message || 'PDF generation failed');
     }
 
-    const pdfBlob = await response.blob();
+    // Check if response has proper Content-Disposition header for download
+    const contentDisposition = response.headers.get('Content-Disposition');
     
-    const url = window.URL.createObjectURL(pdfBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.style.display = 'none';
-    
-    // Add mobile-specific attributes to ensure download
-    a.setAttribute('download', filename);
-    a.setAttribute('target', '_self');
-    
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    if (contentDisposition && contentDisposition.includes('attachment')) {
+      // Backend sent proper download headers, use direct URL approach
+      const pdfBlob = await response.blob();
+      const url = window.URL.createObjectURL(pdfBlob);
+      window.location.href = url;
+      setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+    } else {
+      // Fallback: manual blob download
+      const pdfBlob = await response.blob();
+      
+      // Create a new blob with explicit type to force download
+      const downloadBlob = new Blob([pdfBlob], { 
+        type: 'application/octet-stream' 
+      });
+      
+      const url = window.URL.createObjectURL(downloadBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.style.display = 'none';
+      
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
   }
 }
