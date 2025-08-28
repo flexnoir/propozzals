@@ -191,16 +191,37 @@ export class PDFGenerator {
 
     const pdfBlob = await response.blob();
     
-    const url = window.URL.createObjectURL(pdfBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.target = '_self';
-    a.type = 'application/pdf';
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    // Check if we're on iOS/iPhone
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    if (isIOS) {
+      // iOS Safari doesn't handle blob downloads well - use data URL instead
+      const reader = new FileReader();
+      reader.onload = function() {
+        const dataUrl = reader.result;
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = filename;
+        a.target = '_blank';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+      reader.readAsDataURL(pdfBlob);
+    } else {
+      // Standard blob URL approach for other browsers
+      const url = window.URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.target = '_self';
+      a.type = 'application/pdf';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
   }
 }
