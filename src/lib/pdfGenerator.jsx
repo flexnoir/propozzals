@@ -191,46 +191,23 @@ export class PDFGenerator {
 
     const pdfBlob = await response.blob();
     
-    // Check if we're on iOS/iPhone
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const url = window.URL.createObjectURL(pdfBlob);
     
-    if (isIOS) {
-      // iOS Safari doesn't handle blob downloads well - use data URL instead
-      const reader = new FileReader();
-      reader.onload = function() {
-        try {
-          const dataUrl = reader.result;
-          const a = document.createElement('a');
-          a.href = dataUrl;
-          a.download = filename;
-          a.target = '_blank';
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        } catch (error) {
-          console.error('iOS download failed:', error);
-          // Fallback to blob URL for iOS if data URL fails
-          const url = window.URL.createObjectURL(pdfBlob);
-          window.open(url, '_blank');
-          setTimeout(() => window.URL.revokeObjectURL(url), 10000);
-        }
-      };
-      reader.onerror = function() {
-        console.error('FileReader failed, using blob URL fallback');
-        const url = window.URL.createObjectURL(pdfBlob);
-        window.open(url, '_blank');
-        setTimeout(() => window.URL.revokeObjectURL(url), 10000);
-      };
-      reader.readAsDataURL(pdfBlob);
+    // Check if we're on mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Mobile: open in new tab and delay cleanup
+      window.open(url, '_blank');
+      // Don't revoke immediately - let it persist for 10 minutes
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 10 * 60 * 1000);
     } else {
-      // Standard blob URL approach for other browsers
-      const url = window.URL.createObjectURL(pdfBlob);
+      // Desktop: standard download
       const a = document.createElement('a');
       a.href = url;
       a.download = filename;
-      a.target = '_self';
-      a.type = 'application/pdf';
       a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
