@@ -132,4 +132,35 @@
   scrollbar-color: #2a2f39 #0c0e12;
 }
 
+/* Preview modal custom scrollbars */
+.preview-scroll-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.preview-scroll-container::-webkit-scrollbar-track {
+  background: #1a1f27;
+  border-radius: 4px;
+}
+
+.preview-scroll-container::-webkit-scrollbar-thumb {
+  background: #58e1ff;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.preview-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #4ac9e6;
+}
+
+.preview-scroll-container::-webkit-scrollbar-corner {
+  background: #1a1f27;
+}
+
+/* Firefox preview scrollbar */
+.preview-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #58e1ff #1a1f27;
+}
+
 
