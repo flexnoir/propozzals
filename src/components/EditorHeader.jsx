@@ -86,7 +86,7 @@ export default function EditorHeader({
             title="Clear all fields"
           >
             <span className="hidden sm:inline">Clear All</span>
-            <span className="sm:hidden">🗑</span>
+            <span className="sm:hidden">Clear</span>
           </button>
           
           <button
@@ -94,8 +94,7 @@ export default function EditorHeader({
             onClick={onPreview}
             className="px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]"
           >
-            <span className="hidden sm:inline">Preview</span>
-            <span className="sm:hidden">👁</span>
+            Preview
           </button>
           
           <button
@@ -112,13 +111,11 @@ export default function EditorHeader({
               <div className="flex items-center gap-1 sm:gap-2">
                 <div className="w-3 h-3 border border-[#58e1ff] border-t-transparent rounded-full animate-spin"></div>
                 <span className="hidden md:inline">Generating...</span>
-                <span className="md:hidden sm:inline">PDF...</span>
-                <span className="sm:hidden">⏳</span>
+                <span className="md:hidden">PDF...</span>
               </div>
             ) : (
               <>
-                <span className="hidden sm:inline"><span className="hidden md:inline">Download </span>PDF</span>
-                <span className="sm:hidden">📄</span>
+                <span className="hidden sm:inline">Download </span>PDF
               </>
             )}
           </button>
@@ -137,13 +134,11 @@ export default function EditorHeader({
               <div className="flex items-center gap-1 sm:gap-2">
                 <div className="w-3 h-3 border border-[#0b0f14] border-t-transparent rounded-full animate-spin"></div>
                 <span className="hidden md:inline">Processing...</span>
-                <span className="md:hidden sm:inline">PDF...</span>
-                <span className="sm:hidden">⏳</span>
+                <span className="md:hidden">PDF...</span>
               </div>
             ) : (
               <>
-                <span className="hidden sm:inline"><span className="hidden lg:inline">Get Clean </span>PDF — {currentPrice}</span>
-                <span className="sm:hidden">✨{currentPrice}</span>
+                <span className="hidden lg:inline">Get Clean </span>PDF — {currentPrice}
               </>
             )}
           </button>

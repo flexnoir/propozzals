@@ -6,7 +6,6 @@ import EditorHeader from "../components/EditorHeader.jsx";
 import TemplateSelector from "../components/TemplateSelector.jsx";
 import EditorForm from "../components/EditorForm.jsx";
 import PreviewModal from "../components/PreviewModal.jsx";
-import MobileDownloadButton from "../components/MobileDownloadButton.jsx";
 import PaymentModal from "../components/PaymentModal.jsx";
 import { StorageInfoBanner } from "../components/StorageInfoBanner.jsx";
 import { PRICING, fetchConfig } from "../config/pricing.js";
@@ -97,10 +96,6 @@ export default function Editor() {
           <aside className="md:sticky md:top-[4.5rem] md:self-start">
             <div className="rounded-lg bg-[#0c0e12] ring-1 ring-[#222835] p-3 sm:p-4 relative">
               <TemplateSelector templateId={templateId} title={title} />
-              <MobileDownloadButton 
-                onDownloadPDF={handleDownloadPDF} 
-                isGeneratingPDF={isGeneratingPDF} 
-              />
               <EditorForm 
                 schema={schema} 
                 register={register} 

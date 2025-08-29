@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TEMPLATES } from "../lib/templates";
 import { PRICING, fetchConfig } from "../config/pricing.js";
 import AutoPager from "./AutoPager.new.jsx";
+import TemplateDropdown from "./TemplateDropdown.jsx";
 
 export default function PreviewModal({ 
   isOpen, 
@@ -82,24 +83,15 @@ export default function PreviewModal({
 
         {/* Template Switcher & Zoom Controls */}
         <div className="p-4 border-b border-[#1a1f27] bg-[#11141a]">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div>
-              <div className="text-xs text-[#8b94a3] mb-2">Switch Template:</div>
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(TEMPLATES).map(([id, t]) => (
-                  <button
-                    key={id}
-                    onClick={() => setPreviewTemplateId(id)}
-                    className={`text-xs px-3 py-1.5 rounded-md border transition-colors ${
-                      id === previewTemplateId
-                        ? "bg-[#58e1ff] border-[#58e1ff] text-[#0b0f14] font-medium"
-                        : "border-[#2a2f39] text-[#8b94a3] hover:text-[#58e1ff] hover:border-[#58e1ff]"
-                    }`}
-                  >
-                    {t.title || "Template"}
-                  </button>
-                ))}
-              </div>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+            <div className="flex-1 max-w-xs">
+              <TemplateDropdown
+                templateId={previewTemplateId}
+                onTemplateChange={setPreviewTemplateId}
+                showLabel={true}
+                size="compact"
+                className="w-full"
+              />
             </div>
             <div>
               <div className="text-xs text-[#8b94a3] mb-2">Zoom:</div>

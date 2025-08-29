@@ -1,9 +1,6 @@
 
 import {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import { TEMPLATES } from "../lib/templates.js";
-import ReactDOMServer from "react-dom/server";
-import AutoPager from "../components/AutoPager.new.jsx";
 import { PRICING, fetchConfig } from "../config/pricing.js";
 
 
@@ -20,31 +17,6 @@ export default function Landing() {
     loadConfig();
   }, []);
 
-  // Sample data for template previews
-  const sampleData = {
-    company: { 
-      name: "Your Company", 
-      email: "hello@company.com",
-      phone: "+30 210 123 4567",
-      website: "www.yourcompany.com",
-      address: "Athens, Greece"
-    },
-    client: { 
-      name: "Client Name", 
-      email: "client@example.com",
-      company: "Client Company"
-    },
-    project: { 
-      scope: "Website redesign, component library, performance optimization, handoff documentation",
-      timeline: "3-4 weeks",
-      deliverables: "Complete project files and documentation"
-    },
-    pricing: { 
-      items: "Design system: €1,200\nPerformance optimization: €800\nDocumentation: €400",
-      total: "€2,400"
-    },
-    terms: "50% retainer required upon agreement. Two rounds of revisions included. Proposal valid for 30 days."
-  };
 
   return (
     <div className="min-h-screen bg-[#0f1115] text-[#e9ecf1]">
@@ -132,24 +104,98 @@ export default function Landing() {
 
 
 
-      {/* Templates — dark slate with cyan accent */}
-     {/* TEMPLATES */}
-<section id="templates" className="bg-[#0c0e12] border-t border-[#1a1f27] py-16">
-  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div className="flex items-end justify-between mb-6 sm:mb-8">
-      <h2 className="text-xl sm:text-2xl font-bold text-white">Templates</h2>
-      <Link to="/editor" className="hidden sm:inline text-sm text-[#8b94a3] hover:text-[#58e1ff]">Open editor →</Link>
+      {/* Templates — minimal showcase */}
+<section id="templates" className="bg-[#0c0e12] border-t border-[#1a1f27] py-20">
+  <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">Choose your style</h2>
+      <p className="text-[#8b94a3] text-lg">Three carefully crafted templates. Pick one, start creating.</p>
     </div>
 
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-       {Object.entries(TEMPLATES).map(([id, tpl]) => (
-         <Card key={id} id={id} title={tpl.title || tpl.schema?.name || "Template"} sampleData={sampleData} />
-       ))}
-     </div>
+    <div className="grid md:grid-cols-3 gap-8">
+      {/* Modern Professional */}
+      <Link 
+        to="/editor?t=proposal-modern-01"
+        className="group relative"
+      >
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#58e1ff]/5 to-[#58e1ff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="relative bg-[#11141a] rounded-2xl p-8 border border-[#222835] group-hover:border-[#58e1ff]/30 transition-all duration-300 h-full">
+          <div className="space-y-6">
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#58e1ff] to-[#4cc9f0] flex items-center justify-center">
+              <div className="w-6 h-6 bg-white/20 rounded backdrop-blur" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-2">Modern Professional</h3>
+              <p className="text-[#8b94a3] text-sm leading-relaxed">Clean lines, bold typography. Perfect for consultants and agencies.</p>
+            </div>
+            <div className="pt-4 border-t border-[#1a1f27]">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-[#8b94a3]">Most popular</span>
+                <span className="text-[#58e1ff] group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
 
-    <div className="sm:hidden mt-6">
-      <Link to="/editor" className="block text-center px-4 py-2 rounded-md border border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]">
-        Open editor →
+      {/* Minimal Executive */}
+      <Link 
+        to="/editor?t=proposal-minimal-01"
+        className="group relative"
+      >
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#58e1ff]/5 to-[#58e1ff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="relative bg-[#11141a] rounded-2xl p-8 border border-[#222835] group-hover:border-[#58e1ff]/30 transition-all duration-300 h-full">
+          <div className="space-y-6">
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] flex items-center justify-center">
+              <div className="w-6 h-1 bg-[#0f1115] rounded-full" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-2">Minimal Executive</h3>
+              <p className="text-[#8b94a3] text-sm leading-relaxed">Pure simplicity. Maximum impact with minimal elements.</p>
+            </div>
+            <div className="pt-4 border-t border-[#1a1f27]">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-[#8b94a3]">Timeless</span>
+                <span className="text-[#58e1ff] group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+
+      {/* Elegant Accent */}
+      <Link 
+        to="/editor?t=proposal-elegant-01"
+        className="group relative"
+      >
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#58e1ff]/5 to-[#58e1ff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="relative bg-[#11141a] rounded-2xl p-8 border border-[#222835] group-hover:border-[#58e1ff]/30 transition-all duration-300 h-full">
+          <div className="space-y-6">
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#f72585] to-[#b5179e] flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-white/30 rounded-full" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-2">Elegant Accent</h3>
+              <p className="text-[#8b94a3] text-sm leading-relaxed">Sophisticated details. For premium service providers.</p>
+            </div>
+            <div className="pt-4 border-t border-[#1a1f27]">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-[#8b94a3]">Premium feel</span>
+                <span className="text-[#58e1ff] group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
+
+    <div className="text-center mt-12">
+      <Link 
+        to="/editor" 
+        className="inline-flex items-center gap-2 text-[#8b94a3] hover:text-[#58e1ff] transition-colors text-sm"
+      >
+        <span>See all templates in editor</span>
+        <span className="text-xs">→</span>
       </Link>
     </div>
   </div>
@@ -328,47 +374,6 @@ function Header() {
 }
 
 
-function Card({ id, title, sampleData }) {
-  const [showPreview, setShowPreview] = useState(false);
-  const template = TEMPLATES[id];
-  
-  return (
-    <Link 
-      to={`/editor?t=${id}`}
-      className="group relative rounded-xl bg-[#11141a] ring-1 ring-[#222835] p-4 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(0,0,0,.45)] transition cursor-pointer block"
-      onMouseEnter={() => setShowPreview(true)}
-      onMouseLeave={() => setShowPreview(false)}
-    >
-      {/* Template Preview Area */}
-      <div className="h-40 rounded-lg bg-[#0f1115] ring-1 ring-[#1a1f27] relative overflow-hidden">
-        {showPreview && template ? (
-          <div className="absolute inset-0 bg-white">
-            <div className="scale-[0.25] origin-top-left transform-gpu" style={{ width: '400%', height: '400%' }}>
-              <AutoPager
-                sections={template.buildSections(sampleData)}
-                watermark={true}
-                pageWidthPx={794}
-                pagePaddingPx={36}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="grid place-items-center h-full text-[#475064] text-sm">
-            {title}
-          </div>
-        )}
-      </div>
-      
-             {/* Template Info */}
-       <div className="mt-3 flex items-center justify-between">
-         <div className="text-sm text-white font-medium">{title}</div>
-         <div className="text-xs text-[#8b94a3] hover:text-[#58e1ff] transition-colors">
-           Use →
-         </div>
-       </div>
-    </Link>
-  );
-}
 
 function Step({ n, text }) {
   return (
