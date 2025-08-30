@@ -4,7 +4,6 @@ import { PRICING, fetchConfig } from '../config/pricing.js';
 
 export default function Success() {
   const [params] = useSearchParams();
-  const [countdown, setCountdown] = useState(10);
   const [isValidPayment, setIsValidPayment] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -42,22 +41,6 @@ export default function Success() {
     validatePayment(paymentId);
   }, [paymentId, amount]);
   
-  // Auto-redirect countdown
-  useEffect(() => {
-    if (!isValidPayment) return;
-    
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          setShouldRedirect(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isValidPayment]);
   
   // Handle redirects
   useEffect(() => {
@@ -212,21 +195,24 @@ export default function Success() {
               to="/editor"
               className="w-full bg-[#58e1ff] text-[#0b0f14] font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity block"
             >
-              Create Another Proposal
+              Back to Proposal
+            </Link>
+            
+            <Link
+              to="/editor?new=true"
+              className="w-full bg-gray-100 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors block"
+            >
+              Create New Proposal
             </Link>
             
             <Link
               to="/"
-              className="w-full bg-gray-100 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors block"
+              className="w-full bg-gray-50 text-gray-600 font-medium py-2 px-6 rounded-lg hover:bg-gray-100 transition-colors block text-sm"
             >
               Back to Home
             </Link>
           </div>
 
-          {/* Auto-redirect notice */}
-          <div className="mt-6 text-xs text-gray-500">
-            Redirecting to editor in {countdown} seconds...
-          </div>
         </div>
 
         {/* Footer */}
