@@ -165,6 +165,12 @@ function PaymentForm({ amount, clientSecret, onSuccess, onError, onCancel, onEma
           {emailError && (
             <p className="mt-1 text-sm text-red-600">{emailError}</p>
           )}
+          <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
+            <p className="text-xs text-blue-800">
+              <strong>📧 Email Usage:</strong> Your email will only be used to deliver your PDF and send a payment receipt. 
+              We don't store your proposal content. <a href="/privacy" target="_blank" className="underline hover:text-blue-600">Privacy Policy</a>
+            </p>
+          </div>
         </div>
 
         {paymentRequest && (

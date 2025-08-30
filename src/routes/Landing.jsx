@@ -409,12 +409,26 @@ function UseCase({ icon, title, description }) {
 function FooterDark() {
   return (
     <footer className="border-t border-[#1a1f27] bg-[#0c0e12]">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-10 text-sm text-[#8b94a3] flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>© {new Date().getFullYear()} Propozzals</div>
-        <div className="flex gap-6">
-          <a href="#pricing" className="hover:text-[#58e1ff]">Pricing</a>
-          <a href="#faq" className="hover:text-[#58e1ff]">FAQ</a>
-          <a href="mailto:hello@propozzals.com" className="hover:text-[#58e1ff]">Contact</a>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-10 text-sm text-[#8b94a3]">
+        {/* Main footer content */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+          <div>© {new Date().getFullYear()} Propozzals by FlexNoir</div>
+          <div className="flex gap-6">
+            <a href="#pricing" className="hover:text-[#58e1ff]">Pricing</a>
+            <a href="#faq" className="hover:text-[#58e1ff]">FAQ</a>
+            <a href="mailto:hello@propozzals.com" className="hover:text-[#58e1ff]">Contact</a>
+          </div>
+        </div>
+        
+        {/* Legal links - smaller and separated */}
+        <div className="pt-6 border-t border-[#1a1f27] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex gap-4 text-xs">
+            <Link to="/privacy" className="hover:text-[#58e1ff] transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-[#58e1ff] transition-colors">Terms of Service</Link>
+          </div>
+          <div className="text-xs">
+            <span className="text-green-400">🔒</span> No cookies • Privacy-first
+          </div>
         </div>
       </div>
     </footer>
