@@ -1,5 +1,6 @@
 // Luxury Premium – Opulent design with rich colors, gold accents, and sophisticated typography
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -22,10 +23,12 @@ export function buildSections(rawData) {
       <div className="border-b-2 border-amber-600 pb-8 mb-10 print:pb-6 print:mb-8">
         <div className="text-center mb-8 print:mb-6">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-600 rounded-full mb-4 print:w-12 print:h-12 print:mb-3">
-            <span className="text-white text-xl font-bold print:text-lg">{company.charAt(0).toUpperCase()}</span>
+            <span className="text-white text-xl font-bold print:text-lg">{company ? company.charAt(0).toUpperCase() : "C"}</span>
           </div>
           
-          <h1 className="text-3xl font-serif font-bold text-slate-800 mb-2 print:text-2xl">{company}</h1>
+          <h1 className="text-3xl font-serif font-bold text-slate-800 mb-2 print:text-2xl">
+            {company || <TemplateComponents.EmptyStates.CompanyName />}
+          </h1>
           <div className="w-16 h-px bg-amber-600 mx-auto mb-3 print:w-12"></div>
           {tagline && (
             <p className="text-slate-600 text-sm font-medium uppercase tracking-widest print:text-xs">{tagline}</p>
@@ -36,7 +39,9 @@ export function buildSections(rawData) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center print:grid-cols-2 print:gap-3">
             <div>
               <div className="text-xs font-semibold text-amber-700 uppercase mb-1 print:text-[10px]">Client</div>
-              <div className="text-lg font-semibold text-slate-800 print:text-base">{client}</div>
+              <div className="text-lg font-semibold text-slate-800 print:text-base">
+                {client || <TemplateComponents.EmptyStates.ClientName />}
+              </div>
             </div>
             <div>
               <div className="text-xs font-semibold text-amber-700 uppercase mb-1 print:text-[10px]">Date</div>
@@ -67,7 +72,7 @@ export function buildSections(rawData) {
     sections.push(
       <section key="scope-empty">
         <div className="bg-amber-50 border-2 border-dashed border-amber-300 rounded-lg p-8 text-center print:p-6 print:bg-amber-100">
-          <p className="text-slate-500 font-medium print:text-sm">Project scope details to be defined</p>
+          <TemplateComponents.EmptyStates.ProjectScope className="text-slate-500 font-medium print:text-sm" />
         </div>
       </section>
     );
@@ -106,9 +111,7 @@ export function buildSections(rawData) {
       ) : (
         <div className="bg-amber-50 border-2 border-dashed border-amber-300 rounded-lg p-8 text-center print:p-6 print:bg-amber-100">
           <p className="text-slate-600 font-medium mb-2 print:text-sm">Investment items to be defined</p>
-          <p className="text-slate-500 text-sm print:text-xs">
-            Add items like: <code className="bg-white px-2 py-1 rounded font-mono text-amber-600">Service — 5,000€</code>
-          </p>
+          <TemplateComponents.EmptyStates.PricingItems className="text-slate-500 text-sm print:text-xs" />
         </div>
       )}
       

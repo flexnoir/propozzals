@@ -1,5 +1,6 @@
 // Corporate Professional – structured business template with teal/green color scheme
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -23,10 +24,12 @@ export function buildSections(rawData) {
         <div className="flex items-center justify-between text-white">
           <div className="flex items-center gap-4 print:gap-3">
             <div className="h-14 w-14 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 print:h-12 print:w-12">
-              <span className="text-white font-bold text-xl print:text-lg">{company.charAt(0).toUpperCase()}</span>
+              <span className="text-white font-bold text-xl print:text-lg">{company ? company.charAt(0).toUpperCase() : "C"}</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight print:text-xl">{company}</h1>
+              <h1 className="text-2xl font-bold tracking-tight print:text-xl">
+                {company || <TemplateComponents.EmptyStates.CompanyName />}
+              </h1>
               {tagline && (
                 <p className="text-teal-100 text-sm font-medium print:text-xs">{tagline}</p>
               )}
@@ -47,7 +50,9 @@ export function buildSections(rawData) {
               <div className="h-2 w-2 bg-teal-600 rounded-full print:h-1.5 print:w-1.5"></div>
               <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide print:text-[10px]">Client</p>
             </div>
-            <p className="text-lg font-bold text-gray-900 print:text-base">{client}</p>
+            <p className="text-lg font-bold text-gray-900 print:text-base">
+              {client || <TemplateComponents.EmptyStates.ClientName />}
+            </p>
           </div>
           <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 print:bg-gray-100 print:p-3">
             <div className="flex items-center gap-2 mb-2 print:mb-1">
@@ -156,7 +161,7 @@ export function buildSections(rawData) {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2 print:text-base print:mb-1">Investment Details</h3>
-          <p className="text-gray-600 text-sm print:text-xs">Add your service items: <code className="bg-white px-2 py-1 rounded border border-teal-200 font-mono text-xs print:bg-gray-200 print:px-1.5 print:py-0.5">Strategy Consulting — 3,500€</code></p>
+          <TemplateComponents.EmptyStates.PricingItems className="text-gray-600 text-sm print:text-xs" />
         </div>
       )}
     </section>

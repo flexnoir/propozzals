@@ -1,5 +1,6 @@
 // Modern Professional – clean, contemporary design with blue accent
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -22,10 +23,12 @@ export function buildSections(rawData) {
       <div className="flex items-center justify-between mb-6 print:mb-4">
         <div className="flex items-center gap-3 print:gap-2">
           <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center print:h-8 print:w-8">
-            <span className="text-white font-bold text-sm print:text-xs">{company.charAt(0).toUpperCase()}</span>
+            <span className="text-white font-bold text-sm print:text-xs">{company ? company.charAt(0).toUpperCase() : "C"}</span>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight print:text-xl">{company}</h1>
+            <h1 className="text-2xl font-bold text-gray-900 tracking-tight print:text-xl">
+              {company || <TemplateComponents.EmptyStates.CompanyName />}
+            </h1>
             {tagline && (
               <p className="text-sm text-gray-600 print:text-xs">{tagline}</p>
             )}
@@ -42,7 +45,9 @@ export function buildSections(rawData) {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-700 print:text-xs">Prepared for</p>
-            <p className="text-lg font-semibold text-gray-900 print:text-base">{client}</p>
+            <p className="text-lg font-semibold text-gray-900 print:text-base">
+              {client || <TemplateComponents.EmptyStates.ClientName />}
+            </p>
           </div>
           <div className="text-right">
             <p className="text-sm font-medium text-gray-700 print:text-xs">Date</p>
@@ -124,7 +129,7 @@ export function buildSections(rawData) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <p className="text-sm text-gray-500 print:text-xs">Add line items like: <code className="bg-gray-100 px-2 py-1 rounded print:bg-gray-200 print:px-1 print:py-0.5">Design System — 1,200€</code></p>
+          <TemplateComponents.EmptyStates.PricingItems className="text-gray-500 print:text-xs" />
         </div>
       )}
       

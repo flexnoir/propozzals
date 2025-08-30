@@ -1,5 +1,6 @@
 // Elegant Luxury – sophisticated design with refined color palette and premium aesthetics
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -27,10 +28,12 @@ export function buildSections(rawData) {
           <div className="flex items-center justify-between mb-3 print:mb-2">
             <div className="flex items-center gap-3 print:gap-2">
               <div className="h-10 w-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center shadow-lg print:h-8 print:w-8 print:shadow-none">
-                <span className="text-white font-bold text-base print:text-sm">{company.charAt(0).toUpperCase()}</span>
+                <span className="text-white font-bold text-base print:text-sm">{company ? company.charAt(0).toUpperCase() : "C"}</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-stone-900 tracking-tight print:text-lg">{company}</h1>
+                <h1 className="text-xl font-bold text-stone-900 tracking-tight print:text-lg">
+                  {company || <TemplateComponents.EmptyStates.CompanyName />}
+                </h1>
                 {tagline && (
                   <p className="text-sm text-stone-600 font-medium print:text-xs">{tagline}</p>
                 )}
@@ -47,7 +50,9 @@ export function buildSections(rawData) {
           <div className="grid grid-cols-2 gap-4 print:gap-3">
             <div className="bg-white rounded-lg p-3 border border-stone-200 shadow-sm print:bg-white print:border-stone-300 print:p-2 print:shadow-none">
               <p className="text-xs font-semibold text-stone-600 uppercase tracking-wide mb-1 print:text-[10px]">Client</p>
-              <p className="text-base font-semibold text-stone-900 print:text-sm">{client}</p>
+              <p className="text-base font-semibold text-stone-900 print:text-sm">
+                {client || <TemplateComponents.EmptyStates.ClientName />}
+              </p>
             </div>
             <div className="bg-white rounded-lg p-3 border border-stone-200 shadow-sm print:bg-white print:border-stone-300 print:p-2 print:shadow-none">
               <p className="text-xs font-semibold text-stone-600 uppercase tracking-wide mb-1 print:text-[10px]">Date</p>
@@ -114,7 +119,7 @@ export function buildSections(rawData) {
         </div>
       ) : (
         <div className="rounded-lg border-2 border-dashed border-stone-300 p-6 text-center bg-gradient-to-br from-stone-50 to-amber-50 print:p-4 print:bg-stone-100">
-          <p className="text-stone-600 text-sm print:text-xs">Add investment items like: <code className="bg-white px-2 py-1 rounded border border-stone-200 font-mono text-xs print:bg-stone-200 print:px-1.5 print:py-0.5">Premium Design — 2,500€</code></p>
+          <TemplateComponents.EmptyStates.PricingItems className="text-stone-600 text-sm print:text-xs" />
         </div>
       )}
       

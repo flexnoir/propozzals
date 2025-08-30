@@ -11,15 +11,15 @@ import React from 'react';
 export const DataProcessors = {
   // Process company data with fallbacks
   processCompany: (data) => ({
-    name: data?.company?.name || "Your Company",
-    tagline: data?.company?.tagline || "Professional Services",
+    name: data?.company?.name || "",
+    tagline: data?.company?.tagline || "",
     logo: data?.company?.logo || null,
-    initial: (data?.company?.name || "C").charAt(0).toUpperCase()
+    initial: (data?.company?.name || "").charAt(0).toUpperCase() || "C"
   }),
 
   // Process client data with fallbacks
   processClient: (data) => ({
-    name: data?.client?.name || "Client Name",
+    name: data?.client?.name || "",
     email: data?.client?.email || "",
     phone: data?.client?.phone || "",
     address: data?.client?.address || "",
@@ -43,7 +43,7 @@ export const DataProcessors = {
     const itemsRaw = data?.pricing?.items || "";
     const items = itemsRaw
       ? itemsRaw.split(/\r?\n/).map(line => {
-          const [description, ...rest] = line.split(/—|-/);
+          const [description, ...rest] = line.split('::');
           const price = rest.join("-").trim();
           return { 
             description: (description || "").trim(), 
@@ -54,8 +54,8 @@ export const DataProcessors = {
 
     return {
       items,
-      total: data?.pricing?.total || "800€",
-      validUntil: data?.pricing?.validUntil || "2025-08-21"
+      total: data?.pricing?.total || "",
+      validUntil: data?.pricing?.validUntil || ""
     };
   }
 };
@@ -64,6 +64,44 @@ export const DataProcessors = {
  * Common UI Components for templates
  */
 export const TemplateComponents = {
+  // Centralized empty states for all dynamic fields
+  EmptyStates: {
+    CompanyName: ({ className = "" }) => (
+      <span className={`text-gray-400 ${className}`}>[Company Name]</span>
+    ),
+    ClientName: ({ className = "" }) => (
+      <span className={`text-gray-400 ${className}`}>[Client Name]</span>
+    ),
+    ProjectScope: ({ className = "" }) => (
+      <div className={`text-center py-8 text-gray-500 ${className}`}>
+        <div className="text-sm">No project scope added yet</div>
+      </div>
+    ),
+    PricingItems: ({ className = "" }) => (
+      <div className={`text-center py-8 text-gray-500 ${className}`}>
+        <div className="text-sm">No pricing items added yet</div>
+      </div>
+    ),
+    Terms: ({ className = "" }) => (
+      <div className={`text-center py-8 text-gray-500 ${className}`}>
+        <div className="text-sm">No terms and conditions added yet</div>
+      </div>
+    ),
+    Total: ({ className = "" }) => (
+      <span className={`text-gray-400 ${className}`}>[Total Amount]</span>
+    ),
+    ValidUntil: ({ className = "" }) => (
+      <span className={`text-gray-400 ${className}`}>[Valid Until Date]</span>
+    )
+  },
+
+  // Legacy component for backward compatibility  
+  PricingEmptyState: ({ className = "" }) => (
+    <div className={`text-center py-8 text-gray-500 ${className}`}>
+      <div className="text-sm">No pricing items added yet</div>
+    </div>
+  ),
+
   // Company logo/initial component
   CompanyLogo: ({ company, colors, size = "lg" }) => {
     const sizeClasses = {
@@ -114,16 +152,14 @@ export const TemplateComponents = {
               </tr>
             ))
           ) : (
-            <>
-              <tr className="border-b border-gray-100">
-                <td className="px-6 py-4 text-gray-700">Professional Services</td>
-                <td className="px-6 py-4 text-right font-semibold text-gray-800">500€</td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-6 py-4 text-gray-700">Additional Support</td>
-                <td className="px-6 py-4 text-right font-semibold text-gray-800">300€</td>
-              </tr>
-            </>
+            <tr>
+              <td colSpan="2" className="px-6 py-8 text-center text-gray-500">
+                <div className="space-y-2">
+                  <div className="text-gray-400">No pricing items added yet</div>
+                  <div className="text-sm">Add items in the form to see them here</div>
+                </div>
+              </td>
+            </tr>
           )}
         </tbody>
         <tfoot>
@@ -437,7 +473,7 @@ export const generateSchema = (customFields = []) => {
           label: "Line Items", 
           type: "textarea", 
           required: true,
-          placeholder: "Service Description - €500\nAdditional Service - €300",
+          placeholder: "Service Description :: €500\nAdditional Service :: €300",
           rows: 6
         },
         { name: "pricing.total", label: "Total Amount", type: "text", required: true },

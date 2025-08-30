@@ -1,6 +1,6 @@
 export function processProposalData(data) {
-  const company = data?.company?.name || "Your Company";
-  const client = data?.client?.name || "Client Name";
+  const company = data?.company?.name || "";
+  const client = data?.client?.name || "";
   const tagline = (data?.company?.tagline || "").trim();
   const scopeRaw = (data?.project?.scope || "").trim();
   const itemsRaw = (data?.pricing?.items || "").trim();
@@ -14,7 +14,7 @@ export function processProposalData(data) {
 
   const items = itemsRaw
     ? itemsRaw.split(/\r?\n/).map(l => {
-        const [name, ...rest] = l.split(/—|-/);
+        const [name, ...rest] = l.split('::');
         const price = rest.join("-").trim();
         return { name: (name || "").trim(), price };
       }).filter(it => it.name)

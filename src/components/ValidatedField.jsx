@@ -36,11 +36,12 @@ const ValidatedField = ({
   };
 
   const getFieldType = () => {
+    if (f.type === 'date') return 'date';
+    if (f.type === 'textarea') return 'textarea';
     if (f.key.includes('email')) return 'email';
     if (f.key.includes('phone')) return 'tel';
     if (f.key.includes('website')) return 'url';
-    if (f.key.includes('date')) return 'date';
-    if (f.type === 'textarea') return 'textarea';
+    if (f.key.includes('date') || f.key.includes('valid_until')) return 'date';
     return 'text';
   };
 
@@ -51,17 +52,17 @@ const ValidatedField = ({
     if (key.includes('name')) return 'Enter name...';
     if (key.includes('email')) return 'Enter email address...';
     if (key.includes('phone')) return 'Enter phone number...';
-    if (key.includes('website')) return 'https://example.com';
+    if (key.includes('website')) return 'https://yourwebsite.com';
     if (key.includes('scope')) return 'Describe the project scope...';
     if (key.includes('objectives')) return 'List project objectives...';
-    if (key.includes('items')) return 'Item description—Price\nAnother item—Price';
-    if (key.includes('total')) return '1,500€';
+    if (key.includes('items')) return 'Item description :: €500\nAnother item :: €300';
+    if (key.includes('total')) return 'Enter total amount...';
     if (key.includes('terms')) return 'Enter terms and conditions...';
     
     return 'Enter value...';
   };
 
-  const isRequired = f.key.includes('name') || f.key.includes('scope');
+  const isRequired = f.required;
   const hasError = fieldError || validationError;
   const fieldType = getFieldType();
 
@@ -106,6 +107,7 @@ const ValidatedField = ({
               ${isFocused ? 'ring-2 ring-[#58e1ff] border-[#58e1ff]/40' : ''}
               ${hasError ? 'border-red-400 ring-red-400/20' : 'border-[#2a2f39]'}
               ${!hasError && !isFocused ? 'hover:border-[#3a3f49]' : ''}
+              ${fieldType === 'date' ? '[color-scheme:dark]' : ''}
               focus:outline-none focus:ring-2 focus:ring-[#58e1ff] focus:border-[#58e1ff]/40
             `}
           />
@@ -147,6 +149,16 @@ const ValidatedField = ({
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
           </svg>
           <span>{f.help}</span>
+        </p>
+      )}
+
+      {/* Pricing Items Format Hint */}
+      {f.key.includes('items') && !hasError && (
+        <p className="text-xs text-[#8b94a3] flex items-start space-x-2">
+          <svg className="h-3 w-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+          </svg>
+          <span>Use :: to separate description and price (e.g., "Service :: €500")</span>
         </p>
       )}
 

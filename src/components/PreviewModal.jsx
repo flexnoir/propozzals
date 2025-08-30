@@ -13,7 +13,9 @@ export default function PreviewModal({
   schema,
   onDownloadPDF,
   onShowPayment,
-  isGeneratingPDF 
+  isGeneratingPDF,
+  canExport = true,
+  validationMessage = ""
 }) {
   const navigate = useNavigate();
   const [previewTemplateId, setPreviewTemplateId] = useState(templateId);
@@ -168,10 +170,13 @@ export default function PreviewModal({
               )}
               <button
                 onClick={onDownloadPDF}
-                disabled={isGeneratingPDF}
+                disabled={isGeneratingPDF || !canExport}
+                title={!canExport ? validationMessage : ''}
                 className={`px-3 sm:px-4 py-2 rounded-md text-sm transition-all border ${
                   isGeneratingPDF 
-                    ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75' 
+                    ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75'
+                    : !canExport
+                    ? 'border-[#2a2f39] text-[#6b7280] cursor-not-allowed opacity-50'
                     : 'border-[#2a2f39] text-white hover:border-[#58e1ff] hover:text-[#58e1ff]'
                 }`}
               >
@@ -189,10 +194,13 @@ export default function PreviewModal({
               </button>
               <button
                 onClick={onShowPayment}
-                disabled={isGeneratingPDF}
+                disabled={isGeneratingPDF || !canExport}
+                title={!canExport ? validationMessage : ''}
                 className={`px-3 sm:px-4 py-2 rounded-md text-sm font-semibold transition-all ${
                   isGeneratingPDF 
-                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : !canExport
+                    ? 'bg-gray-500 text-gray-300 cursor-not-allowed opacity-50'
                     : 'bg-[#58e1ff] text-[#0b0f14] hover:opacity-90'
                 }`}
               >

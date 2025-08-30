@@ -85,7 +85,7 @@ export const usePDFGeneration = () => {
         throw new Error(result.error || 'Failed to send email');
       }
 
-      console.log('PDF email sent successfully:', result.messageId);
+      // PDF email sent successfully
       return result;
 
     } catch (error) {
@@ -108,12 +108,12 @@ export const usePDFGeneration = () => {
       
       // Step 2: Send PDF via email (parallel, don't wait)
       if (customerEmail) {
-        console.log('Sending PDF to email:', customerEmail);
+        // Sending PDF to customer email
         // Send email in background - don't wait for it
         sendPDFEmail(paymentIntent, templateId, data, schema, customerEmail)
           .then(result => {
             if (result.success) {
-              console.log('✅ PDF email sent successfully!');
+              // PDF email sent successfully
             } else {
               console.warn('⚠️ PDF email failed:', result.error);
             }

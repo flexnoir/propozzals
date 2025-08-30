@@ -1,5 +1,6 @@
 // Web Agency Professional – Modern, clean design for web development companies
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -26,7 +27,9 @@ export function buildSections(rawData) {
         <div className="pt-8 pb-6 print:pt-4 print:pb-4">
           <div className="flex justify-between items-start">
             <div className="flex-1">
-              <h1 className="text-4xl font-bold text-gray-900 mb-2 print:text-2xl">{company}</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2 print:text-2xl">
+                {company || <TemplateComponents.EmptyStates.CompanyName />}
+              </h1>
               {tagline && (
                 <div className="text-lg text-blue-600 font-medium print:text-base print:text-gray-700">
                   {tagline}
@@ -45,7 +48,9 @@ export function buildSections(rawData) {
           <div className="mt-8 grid grid-cols-1 gap-6 print:mt-4 print:gap-4">
             <div className="bg-blue-50 p-4 rounded-lg print:bg-gray-100 print:border print:p-3">
               <div className="text-sm font-medium text-blue-800 mb-1 print:text-gray-700">Prepared For</div>
-              <div className="text-lg font-semibold text-gray-900 print:text-base">{client}</div>
+              <div className="text-lg font-semibold text-gray-900 print:text-base">
+                {client || <TemplateComponents.EmptyStates.ClientName />}
+              </div>
             </div>
           </div>
         </div>
@@ -142,15 +147,7 @@ export function buildSections(rawData) {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 print:w-16 print:h-16 print:bg-gray-200">
             <div className="w-10 h-10 bg-green-500 rounded-full print:w-8 print:h-8 print:bg-gray-600"></div>
           </div>
-          <p className="text-green-600 font-medium mb-3 print:text-gray-700">Ready to Add Services</p>
-          <p className="text-sm text-gray-600 mb-4 print:text-xs">
-            Add investment items like: <code className="bg-white px-3 py-1 rounded border print:bg-gray-200">Website Development — 8,500€</code>
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-gray-500 print:text-xs">
-            <div>• Website Development</div>
-            <div>• UI/UX Design</div>
-            <div>• E-commerce Solutions</div>
-          </div>
+          <TemplateComponents.EmptyStates.PricingItems className="text-green-600 font-medium print:text-gray-700" />
         </div>
       )}
       

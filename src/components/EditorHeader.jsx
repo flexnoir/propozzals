@@ -2,6 +2,32 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { PRICING, fetchConfig } from "../config/pricing.js";
 
+const ValidationSummary = ({ validation }) => {
+  const { isValid, completedFieldsCount, requiredFieldsCount } = validation;
+  
+  if (isValid) {
+    return (
+      <div className="flex items-center space-x-1 text-green-500">
+        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+        </svg>
+        <span className="text-xs">Complete</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center space-x-1 text-amber-500">
+      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5v3a.75.75 0 001.5 0v-3A.75.75 0 009 9z" clipRule="evenodd" />
+      </svg>
+      <span className="text-xs">
+        {completedFieldsCount}/{requiredFieldsCount}
+      </span>
+    </div>
+  );
+};
+
 const SaveStatusIndicator = ({ saveStatus }) => {
   if (saveStatus === 'saving') {
     return (
@@ -44,7 +70,9 @@ export default function EditorHeader({
   onDownloadPDF, 
   onShowPayment,
   onClearAll,
-  isGeneratingPDF 
+  isGeneratingPDF,
+  canExport = true,
+  validation = null
 }) {
   const [currentPrice, setCurrentPrice] = useState(PRICING.FORMATTED_PRICE);
 
@@ -72,11 +100,17 @@ export default function EditorHeader({
             <span className="hidden xs:inline">Editing: </span>
             <span className="text-white font-medium">{title || "Proposal"}</span>
           </div>
+          {/* Mobile validation status - right after title */}
+          <div className="sm:hidden">
+            {validation && <ValidationSummary validation={validation} />}
+          </div>
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <div className="hidden sm:flex items-center space-x-2 text-xs">
+          {/* Desktop: Show both save and validation status */}
+          <div className="hidden sm:flex items-center space-x-3 text-xs">
             <SaveStatusIndicator saveStatus={saveStatus} />
+            {validation && <ValidationSummary validation={validation} />}
           </div>
           
           <button
@@ -100,10 +134,13 @@ export default function EditorHeader({
           <button
             type="button"
             onClick={onDownloadPDF}
-            disabled={isGeneratingPDF}
+            disabled={isGeneratingPDF || !canExport}
+            title={!canExport && validation ? `Missing: ${validation.missingFields.join(', ')}` : ''}
             className={`px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all ${
               isGeneratingPDF 
-                ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75' 
+                ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75'
+                : !canExport
+                ? 'border-[#2a2f39] text-[#6b7280] cursor-not-allowed opacity-50'
                 : 'border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]'
             }`}
           >
@@ -123,10 +160,13 @@ export default function EditorHeader({
           <button
             type="button"
             onClick={onShowPayment}
-            disabled={isGeneratingPDF}
+            disabled={isGeneratingPDF || !canExport}
+            title={!canExport && validation ? `Missing: ${validation.missingFields.join(', ')}` : ''}
             className={`px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
               isGeneratingPDF 
-                ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                : !canExport
+                ? 'bg-gray-500 text-gray-300 cursor-not-allowed opacity-50'
                 : 'bg-[#58e1ff] text-[#0b0f14] hover:opacity-90'
             }`}
           >

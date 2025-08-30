@@ -35,7 +35,7 @@ export const useAutoSave = (templateId, data) => {
     timeoutRef.current = setTimeout(() => {
       try {
         // Save to localStorage (shared across all templates)
-        localStorage.setItem('ppz:proposal-data', currentDataString);
+        localStorage.setItem('ppz:proposal-data-v2', currentDataString);
         lastSavedRef.current = currentDataString;
         
         setSaveStatus('saved');

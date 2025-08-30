@@ -1,5 +1,6 @@
 // Ultra Minimal – Pure minimalism with maximum white space and subtle typography
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -21,7 +22,9 @@ export function buildSections(rawData) {
     <section key="head">
       <div className="mb-16 print:mb-12">
         <div className="text-center mb-12 print:mb-8">
-          <h1 className="text-4xl font-thin text-gray-900 mb-2 print:text-3xl">{company}</h1>
+          <h1 className="text-4xl font-thin text-gray-900 mb-2 print:text-3xl">
+            {company || <TemplateComponents.EmptyStates.CompanyName />}
+          </h1>
           {tagline && (
             <div className="text-sm font-light text-gray-600 mb-4 print:text-xs print:mb-3">{tagline}</div>
           )}
@@ -35,7 +38,9 @@ export function buildSections(rawData) {
           <div className="text-center space-y-8 print:space-y-6">
             <div>
               <div className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2 print:text-[10px]">For</div>
-              <div className="text-lg font-light text-gray-900 print:text-base">{client}</div>
+              <div className="text-lg font-light text-gray-900 print:text-base">
+                {client || <TemplateComponents.EmptyStates.ClientName />}
+              </div>
             </div>
             <div>
               <div className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2 print:text-[10px]">Date</div>
@@ -65,7 +70,7 @@ export function buildSections(rawData) {
             </div>
           ) : (
             <div className="text-center py-12 print:py-8">
-              <div className="text-gray-400 text-sm font-light print:text-xs">Project scope to be defined</div>
+              <TemplateComponents.EmptyStates.ProjectScope className="text-gray-400 text-sm font-light print:text-xs" />
             </div>
           )}
         </div>
@@ -100,10 +105,7 @@ export function buildSections(rawData) {
             </div>
           ) : (
             <div className="text-center py-12 print:py-8">
-              <div className="text-gray-400 text-sm font-light mb-2 print:text-xs">Add investment items</div>
-              <div className="text-xs text-gray-300 font-light print:text-[10px]">
-                Format: <span className="font-mono">Service — Amount</span>
-              </div>
+              <TemplateComponents.EmptyStates.PricingItems className="text-gray-400 text-sm font-light print:text-xs" />
             </div>
           )}
         </div>
@@ -134,7 +136,7 @@ export function buildSections(rawData) {
           </div>
         ) : (
           <div className="text-center py-8 print:py-6">
-            <div className="text-gray-400 text-sm font-light print:text-xs">Terms and conditions</div>
+            <TemplateComponents.EmptyStates.Terms className="text-gray-400 text-sm font-light print:text-xs" />
           </div>
         )}
       </div>

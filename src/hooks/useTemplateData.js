@@ -32,7 +32,7 @@ export const useTemplateData = () => {
 
   // Load shared proposal data (works across all templates)
   useEffect(() => {
-    const saved = localStorage.getItem('ppz:proposal-data');
+    const saved = localStorage.getItem('ppz:proposal-data-v2');
     
     if (saved) {
       // Use saved data if it exists
@@ -58,7 +58,7 @@ export const useTemplateData = () => {
 
   // Clear all data function
   const clearAllData = () => {
-    localStorage.removeItem('ppz:proposal-data');
+    localStorage.removeItem('ppz:proposal-data-v2');
     reset(schema.defaultData);
   };
 

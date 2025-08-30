@@ -1,5 +1,6 @@
 // Minimal Executive – sophisticated, high-end design with premium typography
 import { processProposalData } from '../shared/dataProcessor.js';
+import { TemplateComponents } from '../../lib/templateBase.jsx';
 
 export function buildSections(rawData) {
   const {
@@ -22,7 +23,9 @@ export function buildSections(rawData) {
       <div className="mb-8 print:mb-6">
         <div className="flex items-baseline justify-between mb-6 print:mb-4">
           <div>
-            <h1 className="text-3xl font-light text-gray-900 tracking-wide print:text-2xl">{company}</h1>
+            <h1 className="text-3xl font-light text-gray-900 tracking-wide print:text-2xl">
+              {company || <TemplateComponents.EmptyStates.CompanyName />}
+            </h1>
             {tagline && (
               <p className="text-sm text-gray-600 mt-1 print:text-xs">{tagline}</p>
             )}
@@ -37,7 +40,9 @@ export function buildSections(rawData) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 uppercase tracking-wide print:text-xs">Client</p>
-              <p className="text-xl font-light text-gray-900 mt-1 print:text-lg">{client}</p>
+              <p className="text-xl font-light text-gray-900 mt-1 print:text-lg">
+                {client || <TemplateComponents.EmptyStates.ClientName />}
+              </p>
             </div>
             <div className="text-right">
               <p className="text-sm font-medium text-gray-600 uppercase tracking-wide print:text-xs">Date</p>
@@ -74,7 +79,7 @@ export function buildSections(rawData) {
     sections.push(
       <section key="scope-empty">
         <div className="border border-gray-200 p-8 text-center print:p-4">
-          <p className="text-gray-500 text-sm font-light print:text-xs">Project scope details to be defined</p>
+          <TemplateComponents.EmptyStates.ProjectScope className="text-gray-500 text-sm font-light print:text-xs" />
         </div>
       </section>
     );
@@ -116,7 +121,7 @@ export function buildSections(rawData) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={0.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
             </svg>
           </div>
-          <p className="text-sm text-gray-500 font-light print:text-xs">Add investment items like: <code className="bg-gray-100 px-2 py-1 rounded font-mono text-xs print:bg-gray-200 print:px-1 print:py-0.5">Strategic Consulting — 5,000€</code></p>
+          <TemplateComponents.EmptyStates.PricingItems className="text-sm text-gray-500 font-light print:text-xs" />
         </div>
       )}
       

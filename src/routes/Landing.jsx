@@ -69,13 +69,13 @@ export default function Landing() {
           <div className="h-10 sm:h-12 bg-[#14161a] text-[#f6f7f9] px-4 sm:px-5 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="h-6 w-6 rounded bg-gradient-to-br from-[#58e1ff] to-[#4cc9f0]" />
-              <div className="font-semibold text-sm sm:text-base">Your Company</div>
+              <div className="font-semibold text-sm sm:text-base">Company Name</div>
             </div>
             <div className="text-[10px] sm:text-xs uppercase tracking-widest text-[#cfd6e1]">Proposal</div>
           </div>
           <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
             <div className="text-xs sm:text-sm text-[#4b5362]">Prepared for</div>
-            <div className="text-base sm:text-lg font-semibold">Client Name</div>
+            <div className="text-base sm:text-lg font-semibold">Client Company</div>
             <div className="mt-2 sm:mt-3 h-px bg-[#e6e8ee]" />
             <div>
               <div className="text-xs sm:text-sm font-semibold mb-1">Scope</div>
@@ -355,20 +355,20 @@ function Header() {
         </button>
       </div>
 
-      {/* Mobile drawer */}
-      {open && (
-        <div className="md:hidden border-t border-[#1a1f27] bg-[#0f1115]">
-          <div className="px-4 py-3 flex flex-col gap-3 text-sm text-[#c2c9d3]">
-            <a href="#templates" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff]">Templates</a>
-            <a href="#how" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff]">How it works</a>
-            <a href="#pricing" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff]">Pricing</a>
-            <a href="#faq" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff]">FAQ</a>
-            <Link to="/editor" onClick={()=>setOpen(false)} className="mt-1 px-3.5 py-2 rounded-md bg-white text-[#0f1115] text-sm font-semibold text-center">
-              Try free preview
-            </Link>
-          </div>
+      {/* Mobile drawer with smooth animation */}
+      <div className={`md:hidden border-t border-[#1a1f27] bg-[#0f1115] transition-all duration-300 ease-in-out overflow-hidden ${
+        open ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className="px-4 py-3 flex flex-col gap-3 text-sm text-[#c2c9d3]">
+          <a href="#templates" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff] transition-colors">Templates</a>
+          <a href="#how" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff] transition-colors">How it works</a>
+          <a href="#pricing" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff] transition-colors">Pricing</a>
+          <a href="#faq" onClick={()=>setOpen(false)} className="hover:text-[#58e1ff] transition-colors">FAQ</a>
+          <Link to="/editor" onClick={()=>setOpen(false)} className="mt-1 px-3.5 py-2 rounded-md bg-white text-[#0f1115] text-sm font-semibold text-center hover:opacity-90 transition-opacity">
+            Try free preview
+          </Link>
         </div>
-      )}
+      </div>
     </header>
   );
 }
