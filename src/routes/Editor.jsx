@@ -8,6 +8,7 @@ import EditorForm from "../components/EditorForm.jsx";
 import PreviewModal from "../components/PreviewModal.jsx";
 import PaymentModal from "../components/PaymentModal.jsx";
 import { StorageInfoBanner } from "../components/StorageInfoBanner.jsx";
+import { SEO, SEO_CONFIG } from "../components/SEO.jsx";
 import { PRICING, fetchConfig } from "../config/pricing.js";
 
 
@@ -79,6 +80,7 @@ export default function Editor() {
 
   return (
     <div className="min-h-screen bg-[#0f1115] text-[#e9ecf1]">
+      <SEO {...SEO_CONFIG.editor} />
       <EditorHeader
         title={title}
         saveStatus={saveStatus}

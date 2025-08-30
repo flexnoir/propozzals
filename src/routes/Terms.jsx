@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { SEO, SEO_CONFIG } from "../components/SEO.jsx";
 
 export default function Terms() {
   return (
     <div className="min-h-screen bg-[#0f1115] text-[#e9ecf1]">
+      <SEO {...SEO_CONFIG.terms} />
       <header className="sticky top-0 z-30 backdrop-blur bg-[#0f1115]/75 border-b border-[#1a1f27]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">

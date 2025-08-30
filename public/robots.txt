@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
+Allow: /privacy
+Allow: /terms
+Allow: /editor
+
+# Block payment flow pages from indexing
+Disallow: /success
+Disallow: /cancel
+
+# Block any potential admin or internal pages
+Disallow: /admin/
+Disallow: /internal/
+Disallow: /_next/
+Disallow: /api/
+
+# Crawl delay to be respectful
+Crawl-delay: 1
 
 Sitemap: https://propozzals.com/sitemap.xml
