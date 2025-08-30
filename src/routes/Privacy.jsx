@@ -120,14 +120,14 @@ export default function Privacy() {
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-white mb-4">🍪 Cookies & Tracking</h2>
-            <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-6">
-              <p className="text-green-100 mb-3">
+            <div className="bg-[#10b981]/10 border border-[#10b981]/30 rounded-lg p-6">
+              <p className="text-[#10b981] mb-3">
                 <strong>Good News:</strong> Propozzals does NOT use cookies or tracking that requires consent banners!
               </p>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="text-white font-medium mb-2">❌ We DON'T use:</h4>
-                  <ul className="text-green-200 text-sm space-y-1">
+                  <ul className="text-[#10b981]/80 text-sm space-y-1">
                     <li>• Analytics cookies</li>
                     <li>• Advertising cookies</li>
                     <li>• Social tracking pixels</li>
@@ -136,7 +136,7 @@ export default function Privacy() {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-2">✅ We only use:</h4>
-                  <ul className="text-green-200 text-sm space-y-1">
+                  <ul className="text-[#10b981]/80 text-sm space-y-1">
                     <li>• Essential localStorage (your device)</li>
                     <li>• Temporary session data (PDF gen)</li>
                   </ul>

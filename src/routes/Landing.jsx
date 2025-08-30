@@ -28,7 +28,7 @@ export default function Landing() {
     {/* LEFT: copy */}
     <div className="space-y-5 sm:space-y-6 relative z-10">
       <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight sm:leading-[1.05] tracking-tight text-white">
-        Proposals that feel <span className="text-[#58e1ff]">intentional</span>.
+        Proposals that feel <span className="bg-gradient-to-r from-[#58e1ff] to-[#4cc9f0] bg-clip-text text-transparent">intentional</span>.
       </h1>
       <p className="text-base sm:text-lg text-[#b7beca] max-w-prose">
         Create professional proposals for services, products, and equipment. Unlimited free previews with watermark.
@@ -37,7 +37,7 @@ export default function Landing() {
 
       {/* Buttons: full-width on mobile */}
       <div className="flex flex-col xs:flex-row gap-3 max-w-md">
-        <Link to="/editor" className="w-full xs:w-auto px-5 py-3 rounded-md bg-white text-[#0f1115] font-semibold text-center hover:opacity-90">
+        <Link to="/editor" className="w-full xs:w-auto px-5 py-3 rounded-md bg-gradient-to-r from-[#58e1ff] to-[#4cc9f0] text-[#0b0f14] font-semibold text-center hover:opacity-90 transition-all duration-200 shadow-lg hover:shadow-[#58e1ff]/25">
           Try free preview
         </Link>
         <a href="#pricing" className="w-full xs:w-auto px-5 py-3 rounded-md border border-[#2a2f39] text-center hover:border-[#58e1ff] hover:text-[#58e1ff]">
@@ -47,16 +47,16 @@ export default function Landing() {
 
       <div className="flex flex-wrap gap-4 text-xs sm:text-sm text-[#8b94a3] items-center">
         <span className="flex items-center gap-1">
-          <span className="text-[#58e1ff]">🔒</span>
-          No data stored on servers
+          <span className="text-[#10b981]">🔒</span>
+          <span className="text-[#10b981]">No data stored on servers</span>
         </span>
         <span className="flex items-center gap-1">
-          <span className="text-[#58e1ff]">⚡</span>
-          Instant PDF generation
+          <span className="text-[#fbbf24]">⚡</span>
+          <span className="text-[#fbbf24]">Instant PDF generation</span>
         </span>
         <span className="flex items-center gap-1">
           <span className="text-[#58e1ff]">📄</span>
-          Professional print quality
+          <span className="text-[#58e1ff]">Professional print quality</span>
         </span>
       </div>
     </div>
@@ -64,11 +64,11 @@ export default function Landing() {
     {/* RIGHT: A4 mock */}
     <div className="relative flex justify-center md:justify-end order-first md:order-none">
       <div className="relative w-[88%] sm:w-[520px] md:w-[600px] lg:w-[640px] max-w-full">
-        <div className="absolute -inset-6 rounded-2xl bg-[#58e1ff]/10 blur-2xl pointer-events-none" />
+        <div className="absolute -inset-6 rounded-2xl bg-gradient-to-r from-[#58e1ff]/10 via-[#4cc9f0]/5 to-[#f472b6]/10 blur-2xl pointer-events-none animate-pulse" />
         <div className="relative aspect-[1/1.414] w-full md:rotate-[-4deg] rounded-xl bg-[#f6f7f9] text-[#14161a] shadow-[0_30px_80px_rgba(0,0,0,.45)] ring-1 ring-[#e6e8ee] overflow-hidden">
           <div className="h-10 sm:h-12 bg-[#14161a] text-[#f6f7f9] px-4 sm:px-5 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded bg-[#58e1ff]" />
+              <div className="h-6 w-6 rounded bg-gradient-to-br from-[#58e1ff] to-[#4cc9f0]" />
               <div className="font-semibold text-sm sm:text-base">Your Company</div>
             </div>
             <div className="text-[10px] sm:text-xs uppercase tracking-widest text-[#cfd6e1]">Proposal</div>
@@ -118,7 +118,7 @@ export default function Landing() {
         to="/editor?t=proposal-modern-01"
         className="group relative"
       >
-        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#58e1ff]/5 to-[#58e1ff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#4cc9f0]/10 to-[#f472b6]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="relative bg-[#11141a] rounded-2xl p-8 border border-[#222835] group-hover:border-[#58e1ff]/30 transition-all duration-300 h-full">
           <div className="space-y-6">
             <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#58e1ff] to-[#4cc9f0] flex items-center justify-center">
@@ -143,7 +143,7 @@ export default function Landing() {
         to="/editor?t=proposal-minimal-01"
         className="group relative"
       >
-        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#58e1ff]/5 to-[#58e1ff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#4cc9f0]/10 to-[#f472b6]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="relative bg-[#11141a] rounded-2xl p-8 border border-[#222835] group-hover:border-[#58e1ff]/30 transition-all duration-300 h-full">
           <div className="space-y-6">
             <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] flex items-center justify-center">
@@ -168,7 +168,7 @@ export default function Landing() {
         to="/editor?t=proposal-elegant-01"
         className="group relative"
       >
-        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#58e1ff]/5 to-[#58e1ff]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-[#58e1ff]/20 via-[#4cc9f0]/10 to-[#f472b6]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="relative bg-[#11141a] rounded-2xl p-8 border border-[#222835] group-hover:border-[#58e1ff]/30 transition-all duration-300 h-full">
           <div className="space-y-6">
             <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#f72585] to-[#b5179e] flex items-center justify-center">
@@ -240,10 +240,10 @@ export default function Landing() {
           <div className="text-center">
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#11141a] ring-1 ring-[#222835]">
               <div className="flex -space-x-2">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#58e1ff] to-[#4cc9f0] ring-2 ring-[#0c0e12]" />
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#f72585] to-[#b5179e] ring-2 ring-[#0c0e12]" />
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#7209b7] to-[#480ca8] ring-2 ring-[#0c0e12]" />
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#f77f00] to-[#fcbf49] ring-2 ring-[#0c0e12]" />
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#58e1ff] to-[#4cc9f0] ring-2 ring-[#0c0e12] animate-pulse" />
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#f472b6] to-[#ec4899] ring-2 ring-[#0c0e12] animate-pulse" style={{animationDelay: '0.5s'}} />
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#10b981] to-[#059669] ring-2 ring-[#0c0e12] animate-pulse" style={{animationDelay: '1s'}} />
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#fbbf24] to-[#f59e0b] ring-2 ring-[#0c0e12] animate-pulse" style={{animationDelay: '1.5s'}} />
               </div>
               <span className="text-white font-semibold">Used by 500+ professionals</span>
             </div>
@@ -281,20 +281,20 @@ export default function Landing() {
               
               <div className="mt-4 flex flex-wrap gap-3 text-xs text-[#8b94a3]">
                 <span className="flex items-center gap-1">
-                  <span className="text-[#58e1ff]">🔒</span>
-                  Privacy first
+                  <span className="text-[#10b981]">🔒</span>
+                  <span className="text-[#10b981]">Privacy first</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="text-[#58e1ff]">⚡</span>
-                  Instant delivery
+                  <span className="text-[#fbbf24]">⚡</span>
+                  <span className="text-[#fbbf24]">Instant delivery</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="text-[#58e1ff]">✨</span>
-                  Print quality
+                  <span className="text-[#f472b6]">✨</span>
+                  <span className="text-[#f472b6]">Print quality</span>
                 </span>
               </div>
               
-              <Link to="/editor" className="mt-5 inline-block px-5 py-3 rounded-md bg-[#58e1ff] text-[#0b0f14] font-semibold hover:opacity-90">
+              <Link to="/editor" className="mt-5 inline-block px-5 py-3 rounded-md bg-gradient-to-r from-[#58e1ff] to-[#4cc9f0] text-[#0b0f14] font-semibold hover:opacity-90 transition-all duration-200 shadow-lg hover:shadow-[#58e1ff]/25">
                 Start free → Pay on export
               </Link>
             </div>
@@ -427,7 +427,7 @@ function FooterDark() {
             <Link to="/terms" className="hover:text-[#58e1ff] transition-colors">Terms of Service</Link>
           </div>
           <div className="text-xs">
-            <span className="text-green-400">🔒</span> No cookies • Privacy-first
+            <span className="text-[#10b981]">🔒</span> <span className="text-[#10b981]">No cookies • Privacy-first</span>
           </div>
         </div>
       </div>
