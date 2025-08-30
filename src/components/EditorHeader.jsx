@@ -116,17 +116,17 @@ export default function EditorHeader({
           <button
             type="button"
             onClick={onClearAll}
-            className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-md border text-xs transition-all border-[#2a2f39] hover:border-red-500 hover:text-red-400"
+            className="px-3 h-8 leading-8 text-center rounded-md border text-xs font-semibold transition-all border-[#2a2f39] hover:border-red-500 hover:text-red-400"
             title="Clear all fields"
           >
-            <span className="hidden sm:inline">Clear All</span>
-            <span className="sm:hidden">Clear</span>
+            <span className="hidden md:inline">Clear All</span>
+            <span className="md:hidden">Clear</span>
           </button>
           
           <button
             type="button"
             onClick={onPreview}
-            className="px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]"
+            className="px-3 h-8 leading-8 text-center rounded-md border text-xs font-semibold transition-all border-[#2a2f39] hover:border-[#58e1ff] hover:text-[#58e1ff]"
           >
             Preview
           </button>
@@ -136,7 +136,7 @@ export default function EditorHeader({
             onClick={onDownloadPDF}
             disabled={isGeneratingPDF || !canExport}
             title={!canExport && validation ? `Missing: ${validation.missingFields.join(', ')}` : ''}
-            className={`px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm transition-all ${
+            className={`px-3 h-8 leading-8 text-center rounded-md border text-xs font-semibold transition-all ${
               isGeneratingPDF 
                 ? 'border-[#58e1ff] text-[#58e1ff] cursor-not-allowed opacity-75'
                 : !canExport
@@ -152,7 +152,7 @@ export default function EditorHeader({
               </div>
             ) : (
               <>
-                <span className="hidden sm:inline">Download </span>PDF
+                <span className="hidden md:inline">Download </span>PDF
               </>
             )}
           </button>
@@ -162,12 +162,12 @@ export default function EditorHeader({
             onClick={onShowPayment}
             disabled={isGeneratingPDF || !canExport}
             title={!canExport && validation ? `Missing: ${validation.missingFields.join(', ')}` : ''}
-            className={`px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-3 h-8 leading-8 text-center rounded-md border text-xs font-semibold transition-all ${
               isGeneratingPDF 
-                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                ? 'bg-gray-600 text-gray-400 border-gray-600 cursor-not-allowed'
                 : !canExport
-                ? 'bg-gray-500 text-gray-300 cursor-not-allowed opacity-50'
-                : 'bg-[#58e1ff] text-[#0b0f14] hover:opacity-90'
+                ? 'bg-gray-500 text-gray-300 border-gray-500 cursor-not-allowed opacity-50'
+                : 'bg-[#58e1ff] text-[#0b0f14] border-[#58e1ff] hover:opacity-90'
             }`}
           >
             {isGeneratingPDF ? (
@@ -178,7 +178,7 @@ export default function EditorHeader({
               </div>
             ) : (
               <>
-                <span className="hidden lg:inline">Get Clean </span>PDF — {currentPrice}
+                <span className="hidden md:inline">Get Clean </span>PDF — {currentPrice}
               </>
             )}
           </button>

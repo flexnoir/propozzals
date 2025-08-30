@@ -20,7 +20,10 @@ export default function PreviewModal({
   const navigate = useNavigate();
   const [previewTemplateId, setPreviewTemplateId] = useState(templateId);
   const [currentPrice, setCurrentPrice] = useState(PRICING.FORMATTED_PRICE);
-  const [scale, setScale] = useState(0.8);
+  // Responsive default scale: mobile gets smaller scale for better accuracy
+  const [scale, setScale] = useState(() => {
+    return window.innerWidth < 768 ? 0.5 : 0.8;
+  });
   const [contentHeight, setContentHeight] = useState(1123); // Default A4 height
 
   // Load configuration on mount
@@ -114,7 +117,7 @@ export default function PreviewModal({
                   +
                 </button>
                 <button
-                  onClick={() => setScale(0.8)}
+                  onClick={() => setScale(window.innerWidth < 768 ? 0.5 : 0.8)}
                   className="px-2 py-1 text-xs bg-[#1a1f27] border border-[#2a2f39] rounded hover:border-[#58e1ff] transition-colors ml-2"
                 >
                   Reset
@@ -125,7 +128,7 @@ export default function PreviewModal({
         </div>
 
         {/* Preview Content */}
-        <div className="flex-1 overflow-auto bg-gray-100 preview-scroll-container">
+        <div className="flex-1 overflow-auto bg-gray-100 preview-scroll-container" style={{ overflowX: 'auto' }}>
           <div className="py-4 min-h-full flex justify-center">
             <div 
               className="bg-white shadow-lg"
